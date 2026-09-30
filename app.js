@@ -504,7 +504,7 @@ var TOPICS=[
   {k:['precio','precia','cuesta','vale','tarifa','costo'], a:'Un pouch de <b>30 gomitas cuesta S/12</b>. Pack Familiar: 3× S/33, Escolar: 5× S/50.', c:[['Ver packs','tienda']]},
   {k:['sabor','sabores','fresa','mango','arandano','limon'], a:'Fresa Andina, Mango Jengibre, Arándano Nocturno y Limón Menta. <b>Fresa, Mango y Limón Menta son veganos</b>; el Arándano lleva colágeno.', c:[['Ver sabores','sabores']]},
   {k:['vegano','vegana','pectina','gelatina','animal'], a:'<b>Pectina de cítricos</b>, sin gelatina animal. Solo Arándano tiene colágeno.', c:[['Ver sabores','sabores']]},
-  {k:['caloria','calorias','nutricion'], a:'Van de <b>38-45 kcal</b> por pouch. Sabor vegano = pectina natural.', c:[['Ver nutrición','nutricion']]},
+  {k:['caloria','calorias','nutricion'], a:'<b>42 kcal</b> por cada 5 gomitas (el pouch trae 30). Sabor vegano = pectina natural.', c:[['Ver nutrición','nutricion']]},
   {k:['pedir','comprar','orden','carrito','cómo pedir'], a:'En <b>3 pasos</b>: eliges, agregas y pides por WhatsApp.', c:[['Ver tienda','tienda']]},
    {k:['mayorista','bodega','quiosco','distribucion'], a:'Desde <b>10 pouches</b> con <b>precio mayorista</b>. Muestras gratis.', c:[['Escribirme','contacto']]},
    {k:['azucar','endulzante','stevia','eritritol'], a:'<b>0% azúcar añadida</b>: endulzamos con stevia y eritritol. El poco azúcar (≈3 g) viene de la fruta real.', c:[['Ver nutrición','nutricion']]},
@@ -582,19 +582,18 @@ var dlxBusy=false;  // evita dobles envíos
 
 var DULCITA_SYS=
 'Eres Dulcita, la gomita mascota de GOMI LIGHT, emprendimiento escolar de la I.E. N.° 5130 Ciudadela Pachacútec (Ventanilla, Callao, Perú). '+
-'Hablas en primera persona, con calidez peruana, fresca, juvenil y cortés. Respuestas CORTAS: 1 a 3 frases, con a lo más un emoji.\n\n'+
+'Hablas en primera persona, con calidez peruana, fresca, juvenil y cortés. Respuestas CORTAS: 1 a 3 frases y sin emojis.\n\n'+
 'CONTEXTO DEL PRODUCTO (todo lo que conoces):\n'+
 '- Gomitas con fruta real, pectina de cítricos (sin gelatina animal) y 0% azúcar añadida; dulzor de stevia y eritritol.\n'+
 '- 4 sabores: Fresa Andina, Mango Jengibre, Arándano Nocturno (único con colágeno, no vegano) y Limón Menta. Los veganos son Fresa, Mango y Limón Menta.\n'+
 '- Pouch de 30 gomitas: S/12. Pack Familiar: 3 pouches S/33 (ahorro S/3). Pack Escolar: 5 pouches S/50 (ahorro S/10).\n'+
 '- Pouch surtido: el cliente elige cuántas gomitas por sabor hasta 30, en la sección Tienda.\n'+
-'- Envío GRATIS en Pachacútec, Mi Perú y Ventanilla Centro (mismo día, punto de encuentro). Lima y Callao: S/8, 24-48 h.\n'+
+'- Envío GRATIS en Pachacútec, Mi Perú y Ventanilla (punto de encuentro). Lima y Callao: S/8, 24-48 h.\n'+
 '- Pagos: Yape, Plin, transferencia o efectivo contra entrega.\n'+
 '- WhatsApp oficial: 519 101 47552. Ubicación: I.E. 5130, Av. 225, Pachacútec.\n'+
-'- 38-45 kcal por pouch. Sin cafeína, sin gluten, sin colorantes artificiales.\n'+
+'- 42 kcal por cada 5 gomitas (el pouch trae 30). Sin cafeína, sin gluten, sin colorantes artificiales.\n'+
 '- Cambio garantizado si el primer pouch no convence.\n'+
-'- B2B: precio mayorista desde 10 pouches, muestras gratis en Contacto.\n'+
-'- El 20% de lo vendido apoya a la I.E. 5130.\n\n'+
+'- B2B: precio mayorista desde 10 pouches, muestras gratis en Contacto.\n\n'+
 'MANERA DE RESPONDER:\n'+
 '- Si te saludan, saluda con dulzura y lleva suave al producto.\n'+
 '- Si algo no está en este contexto, invita con naturalidad a confirmar por WhatsApp.\n'+
