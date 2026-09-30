@@ -619,10 +619,10 @@ function renderBotText(raw){
    la dirección de tu Cloudflare Worker (worker-nvidia.js) entra NVIDIA de
    verdad; si lo dejas vacío, el mismo gpt-oss-20b se pide por el transporte de
    Pollinations, que sí admite CORS. */
-function postIA(url,model,msgs,maxTok,ctrl,key){
-  var h={'Content-Type':'application/json'};
-  if(key)h.Authorization='Bearer '+key;
-  return fetch(url,{method:'POST',signal:ctrl.signal,headers:h,
+/* La NVIDIA se pide siempre al Worker: la clave vive alli, nunca en el navegador,
+   asi que esta funcion no acepta credenciales. */
+function postIA(url,model,msgs,maxTok,ctrl){
+  return fetch(url,{method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:model,messages:msgs,max_tokens:maxTok,temperature:.7})
   }).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
    .then(function(d){
