@@ -570,12 +570,13 @@ function pickAnswer(t){
    No lleva respuestas predefinidas: las genera la IA.
    Si la red falla, cae al modo local (TOPICS) sin que el usuario lo note. */
 var AI_URL='https://text.pollinations.ai/openai';
-var AI_MODEL='openai-fast';
-/* Modo ultra-rápido opcional: pega una key gratuita de Google AI Studio
-   (aistudio.google.com → Get API Key) y Dulcita responderá en ~1 s con
-   Gemini Flash Lite, con llamada directa desde el navegador. */
-var GEMINI_KEY='';
-var GEMINI_URL='https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent';
+/* Modelo principal: gpt-oss-20b, el de NVIDIA. Se pide por el transporte de
+   Pollinations porque el navegador no puede llamar a NVIDIA directo (CORS).
+   Para que la respuesta venga de la NVIDIA de verdad, pega la dirección de tu
+   Worker en NV_PROXY y se antepondrá. */
+var AI_MODEL='gpt-oss-20b';
+var AI_MODEL_ALT='openai-fast';   /* segunda opción, más rápida */
+var NV_PROXY='';                  /* https://lo-que-sea.workers.dev  */
 var dlxHist=[];     // historial de la conversación
 var dlxBusy=false;  // evita dobles envíos
 
@@ -611,63 +612,74 @@ function renderBotText(raw){
   }).join('');
 }
 
-/* Llama al backend rápido de Gemini (si hay key), si no, Pollinations. */
+/* Llama a la IA: NVIDIA primero y Pollinations de segunda.
+   Ojo con por qué hace falta el proxy: NVIDIA solo acepta la clave en la
+   cabecera "Authorization", y eso obliga al navegador a hacer un preflight que
+   su servidor no aprueba, así que la llamada directa se bloquea. Si pegas aquí
+   la dirección de tu Cloudflare Worker (worker-nvidia.js) entra NVIDIA de
+   verdad; si lo dejas vacío, el mismo gpt-oss-20b se pide por el transporte de
+   Pollinations, que sí admite CORS. */
+function postIA(url,model,msgs,maxTok,ctrl,key){
+  var h={'Content-Type':'application/json'};
+  if(key)h.Authorization='Bearer '+key;
+  return fetch(url,{method:'POST',signal:ctrl.signal,headers:h,
+    body:JSON.stringify({model:model,messages:msgs,max_tokens:maxTok,temperature:.7})
+  }).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+   .then(function(d){
+     var m=d&&d.choices&&d.choices[0]&&d.choices[0].message;
+     var t=m&&(m.content||m.reasoning_content||m.reasoning);
+     if(!t||!String(t).trim())throw new Error('vacio');
+     return String(t).trim();
+   });
+}
+var FALLA_CUOTA=/HTTP (402|429|5\d\d)/;
+function conReintentos(fn,intentos){
+  function intento(n){
+    return Promise.resolve().then(fn).catch(function(e){
+      if(n>=intentos||!FALLA_CUOTA.test((e&&e.message)||''))throw e;
+      return new Promise(function(r){setTimeout(r,1300*n)}).then(function(){return intento(n+1)});
+    });
+  }
+  return intento(1);
+}
 function askDulcita(q,typingEl){
-  var ctrl=new AbortController(),timeout=setTimeout(function(){ctrl.abort()},25000);
+  var ctrl=new AbortController(),timeout=setTimeout(function(){ctrl.abort()},30000);
   var msgs=[{role:'system',content:DULCITA_SYS}]
     .concat(dlxHist.slice(-10))
     .concat([{role:'user',content:q}]);
-  var req;
-  if(GEMINI_KEY){
-    /* Gemini: systemInstruction + historial en formato contents */
-    var contents=dlxHist.slice(-10).map(function(m){return{role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}});
-    contents.push({role:'user',parts:[{text:q}]});
-    req=fetch(GEMINI_URL+'?key='+GEMINI_KEY,{
-      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        systemInstruction:{parts:[{text:DULCITA_SYS}]},
-        contents:contents,
-        generationConfig:{maxOutputTokens:250,temperature:0.7}
-      })
-    }).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
-      .then(function(d){
-        var c=d&&d.candidates&&d.candidates[0];
-        var text=c&&c.content&&c.content.parts?c.content.parts.map(function(p){return p.text||''}).join('').trim():'';
-        if(!text)throw new Error('vacio');
-        return text;
-      });
-  }else{
-    req=fetch(AI_URL,{
-      method:'POST',signal:ctrl.signal,
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:AI_MODEL,messages:msgs,max_tokens:250,temperature:0.7})
-    }).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
-     .then(function(d){
-       var text=d&&d.choices&&d.choices[0]&&d.choices[0].message?String(d.choices[0].message.content||'').trim():'';
-       if(!text)throw new Error('vacio');
-       return text;
-     });
+  /* Motores en orden: NVIDIA de principal, Pollinations de segunda. */
+  var motores=[];
+  if(NV_PROXY)motores.push({n:'NVIDIA · '+NV_MODEL,fn:function(){return postIA(NV_PROXY+'/chat',NV_MODEL,msgs,600,ctrl)}});
+  motores.push({n:AI_MODEL,fn:function(){return postIA(AI_URL,AI_MODEL,msgs,280,ctrl)}});
+  motores.push({n:AI_MODEL_ALT,fn:function(){return postIA(AI_URL,AI_MODEL_ALT,msgs,250,ctrl)}});
+  function probar(i){
+    if(i>=motores.length())return Promise.reject(new Error('sin motores'));
+    return conReintentos(motores[i].fn,2).then(function(t){return {t:t,n:motores[i].n}});
   }
-  req.then(function(text){
-     clearTimeout(timeout);typingEl.remove();
-     dlxHist.push({role:'user',content:q},{role:'assistant',content:text});
-     bubble('bot',renderBotText(text));
-     dlxBusy=false;
-   }).catch(function(){
-     clearTimeout(timeout);typingEl.remove();dlxBusy=false;
-     /* Modo local de respaldo si falla la red/API */
-     var t=matchTopic(q);
-     if(t)bubble('bot',pickAnswer(t));
-     else bubble('bot','Uy, mi conexión se trabó un poquito 🙈 inténtalo de nuevo o escríbenos al '+blue('WhatsApp','contacto')+'.');
-   });
+  function responde(r){
+    clearTimeout(timeout);typingEl.remove();
+    dlxHist.push({role:'user',content:q},{role:'assistant',content:r.t});
+    bubble('bot',renderBotText(r.t));
+    dlxBusy=false;
+  }
+  var cadena=Promise.resolve();
+  motores.forEach(function(m,i){cadena=cadena.then(function(){return probar(i)})});
+  cadena.then(responde).catch(function(){
+    clearTimeout(timeout);typingEl.remove();dlxBusy=false;
+    /* Modo local de respaldo si falla la red/API */
+    var t=matchTopic(q);
+    if(t)bubble('bot',pickAnswer(t));
+    else bubble('bot','Uy, mi conexión se trabó un poquito 🙈 inténtalo de nuevo o escríbenos al '+blue('WhatsApp','contacto')+'.');
+  });
 }
 
 /* Pre-calienta el endpoint al abrir la página: evita el "cold start"
    (~9 s) para que la primera respuesta real salga en ~1 s. */
 function warmAI(){
-  if(GEMINI_KEY)return; /* Gemini no necesita calentar */
+  /* El pre-calentado va contra el modelo de reserva: el principal es de razonamiento
+     y gastaría tokens solo en un saludo. */
   fetch(AI_URL,{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:AI_MODEL,messages:[{role:'user',content:'ok'}],max_tokens:1})
+    body:JSON.stringify({model:AI_MODEL_ALT,messages:[{role:'user',content:'ok'}],max_tokens:1})
   }).then(function(){'caliente'}).catch(function(){});
 }
 window.addEventListener('load',function(){setTimeout(warmAI,1200)});
