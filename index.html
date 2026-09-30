@@ -13,698 +13,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Separation of Concerns: hoja de estilos externa -->
+<link rel="stylesheet" href="estilos.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Product","name":"GOMI LIGHT","description":"Gomitas saludables sin azúcar añadida con fruta real y pectina natural. 4 sabores. Hechas en Pachacutec, Callao.","brand":{"@type":"Brand","name":"GOMI LIGHT"},"offers":{"@type":"Offer","price":"12.00","priceCurrency":"PEN","availability":"https://schema.org/InStock"},"seller":{"@type":"Organization","name":"GOMI LIGHT · I.E. 5130 Pachacutec","address":{"@type":"PostalAddress","addressLocality":"Ventanilla","addressRegion":"Callao","addressCountry":"PE"}}}
 </script>
-<style>
-/* ================= TOKENS · TEMA CLARO (rosa · amarillo · rojo) ================= */
-:root{
-  --rosa:#ff4d88;--rosa-osc:#e6266f;--rojo:#ff2e55;--rojo-osc:#d61f42;
-  --amarillo:#ffd166;--dorado:#ffb020;--naranja:#ff8a3d;--uva:#9d5cff;
-  --tinta:#33172b;--suave:#8a5f7d;--tenue:#b08aa4;
-  --bg:#fff5f8;--bg2:#fff9ef;--card:#ffffff;--linea:rgba(230,38,111,.13);
-  --wa:#25d366;
-  --sh-sm:0 8px 22px rgba(230,38,111,.09);--sh:0 16px 40px rgba(230,38,111,.15);--sh-lg:0 26px 64px rgba(230,38,111,.22);
-  --r-sm:14px;--r:22px;--r-lg:32px;--pill:999px;
-  --ff-d:'Titan One',system-ui,sans-serif;--ff-b:'Outfit',system-ui,sans-serif;
-  --ease:cubic-bezier(.22,1,.36,1);--spring:cubic-bezier(.34,1.56,.64,1);--t:.28s;
-  --nav-h:70px;--max-w:1120px;--gut:clamp(16px,5vw,40px);
-  --grad-pp:linear-gradient(135deg,#e6266f,#ff4d88 55%,#ff8a3d);
-  --grad-hot:linear-gradient(135deg,#e61e4c,#ff4d88);
-  --grad-sun:linear-gradient(135deg,#ffb020,#ffd166);
-  --grad-candy:linear-gradient(120deg,#e61e4c,#ff4d88 34%,#ff5c39 66%,#ff8a3d);
-  --grad-txt:linear-gradient(100deg,#e6266f,#ff8a3d 45%,#ffb020 80%);
-  --grad-foot:linear-gradient(150deg,#d61f42,#e6266f 55%,#ff4d88);
-  --aur1:rgba(255,209,102,.5);--aur2:rgba(255,77,136,.32);--aur3:rgba(255,46,85,.2);--aur4:rgba(255,138,61,.24);
-}
-/* ================= TEMA OSCURO (rojo · azul) ================= */
-[data-theme=dark]{
-  --rosa:#ff6b9e;--rosa-osc:#ff4d6d;--rojo:#ff4d6d;--rojo-osc:#ff2e55;
-  --amarillo:#ffd166;--dorado:#ffb020;--naranja:#ff8a3d;--uva:#8f7bff;
-  --azul:#4da3ff;--azul-osc:#2563eb;
-  --tinta:#eef2ff;--suave:#a5b4d9;--tenue:#7487b8;
-  --bg:#0b0f2a;--bg2:#0e1434;--card:#161b3e;--linea:rgba(93,140,255,.16);
-  --sh-sm:0 8px 22px rgba(0,0,0,.4);--sh:0 16px 40px rgba(0,0,0,.5);--sh-lg:0 26px 64px rgba(0,0,0,.6);
-  --grad-pp:linear-gradient(135deg,#1d4ed8,#2563eb 55%,#e11d48);
-  --grad-hot:linear-gradient(135deg,#e11d48,#ff4d6d);
-  --grad-sun:linear-gradient(135deg,#ff8a3d,#ffd166);
-  --grad-candy:linear-gradient(120deg,#1d4ed8,#2563eb 30%,#be123c 62%,#c2410c);
-  --grad-txt:linear-gradient(100deg,#4da3ff,#ff4d6d 55%,#ffd166);
-  --grad-foot:linear-gradient(150deg,#0d1230,#161b3e 55%,#1b2150);
-  --aur1:rgba(255,46,85,.16);--aur2:rgba(77,163,255,.15);--aur3:rgba(37,99,235,.12);--aur4:rgba(255,209,102,.08);
-}
-
-/* ================= BASE ================= */
-*,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:var(--ff-b);color:var(--tinta);background:var(--bg);line-height:1.65;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
-body::before{
-  content:"";position:fixed;inset:-22%;z-index:-1;pointer-events:none;
-  background:
-    radial-gradient(640px 440px at 18% 16%,var(--aur1),transparent 62%),
-    radial-gradient(560px 460px at 84% 26%,var(--aur2),transparent 62%),
-    radial-gradient(760px 560px at 52% 96%,var(--aur3),transparent 62%),
-    radial-gradient(420px 360px at 74% 6%,var(--aur4),transparent 58%);
-  filter:blur(30px);animation:drift 18s ease-in-out infinite alternate;
-}
-@keyframes drift{
-  0%{transform:translate(0,0) rotate(0deg)}
-  50%{transform:translate(3%,-2%) rotate(2deg)}
-  100%{transform:translate(-3%,2%) rotate(-2deg)}
-}
-h1,h2,h3,h4{font-family:var(--ff-d);line-height:1.08;margin:0 0 .5em;letter-spacing:.01em;font-weight:400}
-h1{font-size:clamp(2.4rem,6vw,4.2rem)}
-h2{font-size:clamp(1.7rem,3.8vw,2.6rem)}
-h3{font-size:1.3rem}
-p{margin:0 0 1em}
-a{color:var(--rosa-osc)}
-[data-theme=dark] a{color:var(--azul)}
-img{max-width:100%;display:block}
-button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
-input,select,textarea{font:inherit;color:inherit}
-::selection{background:var(--rosa);color:#fff}
-:focus-visible{outline:3px solid rgba(255,77,136,.6);outline-offset:2px;border-radius:8px}
-[data-theme=dark] :focus-visible{outline-color:rgba(77,163,255,.6)}
-.skip{position:fixed;top:-64px;left:16px;z-index:999;background:var(--grad-hot);color:#fff;padding:12px 18px;border-radius:0 0 14px 14px;font-weight:800;transition:top .3s}
-.skip:focus{top:0}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-
-/* ================= LAYOUT ================= */
-.wrap{max-width:var(--max-w);margin-inline:auto;padding-inline:var(--gut)}
-.sec{padding-block:clamp(56px,9vw,104px);position:relative}
-.sec.alt{background:linear-gradient(180deg,transparent,var(--bg2) 18%,var(--bg2) 82%,transparent)}
-.page{display:none;min-height:60vh;padding-top:var(--nav-h)}
-.page.is-active{display:block;animation:pageIn .6s var(--ease)}
-@keyframes pageIn{from{opacity:0;transform:translateY(30px) scale(.985);filter:blur(10px)}to{opacity:1;transform:none;filter:blur(0)}}
-.sec-head{text-align:center;max-width:660px;margin:0 auto clamp(28px,5vw,48px)}
-.sec-head .sub{color:var(--suave);font-size:1.06rem;font-weight:500;margin:0}
-.kick{display:inline-flex;align-items:center;gap:8px;background:var(--bg2);color:var(--rosa-osc);border:1.5px solid var(--linea);padding:7px 14px;border-radius:var(--pill);font-weight:800;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
-[data-theme=dark] .kick{color:var(--azul)}
-.grad-txt{background:var(--grad-txt);-webkit-background-clip:text;background-clip:text;color:transparent}
-
-/* ================= NAV ================= */
-.nav{position:fixed;inset:0 0 auto;z-index:900;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:12px;padding-inline:var(--gut);background:var(--bg);background:color-mix(in srgb,var(--bg) 76%,transparent);backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5);border-bottom:1px solid var(--linea);transition:background var(--t)}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
-.brand .logo{width:44px;height:44px;border-radius:15px;background:var(--grad-sun);display:grid;place-items:center;box-shadow:0 6px 16px rgba(255,138,61,.35);transition:transform .4s var(--spring)}
-.brand .logo svg{width:34px;height:34px;--g:#e6266f;--gd:#7a1233}
-.brand:hover .logo{transform:rotate(-10deg) scale(1.1)}
-.brand b{font-family:var(--ff-d);font-size:1.05rem;display:block;line-height:1;letter-spacing:.02em}
-.brand small{font-size:.6rem;font-weight:800;letter-spacing:.16em;color:var(--rosa);text-transform:uppercase}
-[data-theme=dark] .brand small{color:var(--azul)}
-.nav-links{display:flex;gap:2px;list-style:none;margin:0;padding:0}
-.nav-links a{display:block;padding:9px 13px;border-radius:var(--pill);font-weight:700;font-size:.92rem;color:var(--suave);text-decoration:none;transition:all .2s}
-.nav-links a:hover{color:var(--tinta);background:rgba(255,77,136,.12)}
-.nav-links a.on{color:#fff;background:var(--grad-hot);box-shadow:0 6px 16px rgba(230,38,111,.35)}
-.nav-acts{display:flex;align-items:center;gap:8px}
-.icobtn{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:rgba(255,77,136,.12);color:var(--rosa-osc);transition:transform .25s var(--spring),background .25s;position:relative}
-[data-theme=dark] .icobtn{background:rgba(77,163,255,.14);color:var(--azul)}
-.icobtn:hover{transform:translateY(-2px) scale(1.07)}
-.icobtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.burger{display:none;width:42px;height:42px;border-radius:14px;background:rgba(255,77,136,.12);align-items:center;justify-content:center;padding:0;flex-direction:column;gap:4px}
-.burger i{width:18px;height:2px;background:var(--tinta);border-radius:2px;transition:.25s}
-.burger.open i:nth-child(1){transform:translateY(6px) rotate(45deg)}
-.burger.open i:nth-child(2){opacity:0}
-.burger.open i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-.mnav{position:fixed;top:var(--nav-h);left:0;right:0;z-index:890;background:var(--card);border-bottom:1px solid var(--linea);box-shadow:var(--sh);padding:14px var(--gut) 20px;display:none;flex-direction:column;gap:4px}
-.mnav.open{display:flex;animation:pageIn .35s var(--ease)}
-.mnav a{padding:13px 16px;border-radius:14px;font-weight:700;text-decoration:none;color:var(--tinta);background:var(--bg2)}
-.mnav a.on{background:var(--grad-hot);color:#fff}
-
-/* ================= BOTONES / CHIPS ================= */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--ff-b);font-weight:800;font-size:1rem;padding:13px 24px;border-radius:var(--pill);text-decoration:none;min-height:48px;transition:transform .25s var(--spring),box-shadow .25s,filter .25s;position:relative;white-space:nowrap;overflow:hidden}
-.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 32%,rgba(255,255,255,.16) 50%,transparent 68%);transform:translateX(-130%);transition:transform .7s var(--ease);pointer-events:none}
-.btn:hover::after{transform:translateX(130%)}
-.btn:hover{transform:translateY(-3px)}
-.btn:active{transform:scale(.96)}
-.btn svg{width:19px;height:19px;flex-shrink:0}
-.btn svg.stroke{stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.btn-fresa{background:var(--grad-pp);color:#fff;box-shadow:0 12px 28px rgba(230,38,111,.4)}
-.btn-fresa:hover{box-shadow:0 18px 38px rgba(230,38,111,.5)}
-.btn-fresa.pulse{animation:ctaPulse 2.6s ease-in-out infinite}
-@keyframes ctaPulse{0%,100%{box-shadow:0 12px 28px rgba(230,38,111,.4)}50%{box-shadow:0 12px 28px rgba(230,38,111,.4),0 0 0 9px rgba(230,38,111,.12)}}
-.btn-amar{background:var(--grad-sun);color:#5a3a00;box-shadow:0 12px 28px rgba(255,176,32,.45)}
-[data-theme=dark] .btn-amar{color:#2d1b02}
-.btn-wa{background:linear-gradient(135deg,#1da851,var(--wa));color:#fff;box-shadow:0 12px 28px rgba(37,211,102,.4)}
-.btn-ghost{background:var(--card);border:2px solid var(--linea);color:var(--tinta)}
-.btn-ghost:hover{border-color:var(--rosa)}
-.btn-sm{padding:9px 16px;font-size:.88rem;min-height:40px}
-.btn-lg{padding:15px 30px;font-size:1.06rem}
-.btn-block{width:100%}
-.badge{position:absolute;top:14px;right:14px;z-index:3;background:var(--amarillo);color:#5a3a00;font-weight:900;font-size:.68rem;letter-spacing:.06em;padding:6px 11px;border-radius:var(--pill);transform:rotate(6deg);box-shadow:0 6px 14px rgba(90,58,0,.2);text-transform:uppercase}
-
-/* ================= HERO ================= */
-.hero{position:relative;overflow:hidden;padding-block:clamp(36px,6vw,72px) clamp(44px,6vw,84px)}
-.hero-in{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,56px);align-items:center}
-.hero h1{text-transform:uppercase;margin:.4em 0 .35em}
-.hero h1 .w{display:inline-block;opacity:0;transform:translateY(34px) rotate(-8deg);animation:wIn .8s var(--spring) forwards;animation-delay:var(--d,0s)}
-@keyframes wIn{to{opacity:1;transform:none}}
-.strike{position:relative}
-.strike::after{content:"";position:absolute;left:-4%;right:-4%;top:52%;height:.13em;background:var(--rojo);border-radius:99px;transform:scaleX(0);transform-origin:left;animation:strikeIn .5s var(--ease) 1.15s forwards}
-@keyframes strikeIn{to{transform:scaleX(1)}}
-.hero-lead{color:var(--suave);font-size:clamp(1.04rem,2vw,1.2rem);font-weight:500;max-width:32em}
-.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
-.hero-trust{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:22px;color:var(--suave);font-weight:700;font-size:.92rem}
-.stars{display:inline-flex;gap:2px;color:var(--dorado)}
-.stars svg{width:16px;height:16px;fill:currentColor}
-.price-pill{display:inline-flex;align-items:center;gap:10px;background:var(--grad-sun);color:#5a3a00;padding:9px 16px;border-radius:var(--pill);font-weight:800;box-shadow:0 8px 20px rgba(255,176,32,.4)}
-.price-pill b{font-family:var(--ff-d);font-size:1.3rem}
-.hero-stage{position:relative;height:min(520px,80vw);display:grid;place-items:center}
-.hero-photo{position:relative;width:min(400px,88%);aspect-ratio:4/4.4;transform:rotate(-3deg);animation:heroFloat 7s ease-in-out infinite}
-@keyframes heroFloat{0%,100%{transform:rotate(-3deg) translateY(0)}50%{transform:rotate(-1.5deg) translateY(-14px)}}
-.hframe{position:absolute;left:-13px;top:-13px;width:calc(100% + 26px);height:calc(100% + 26px);z-index:0;pointer-events:none;overflow:visible}
-.hframe rect{animation:dashFlow 14s linear infinite}
-@keyframes dashFlow{to{stroke-dashoffset:-100}}
-@keyframes spinSlow{to{transform:rotate(360deg)}}
-.hero-photo img{position:relative;z-index:2;width:100%;height:100%;object-fit:cover;border-radius:36px;border:6px solid #fff;box-shadow:var(--sh-lg)}
-[data-theme=dark] .hero-photo img{border-color:#141a3f}
-.hero-photo::after{content:"";position:absolute;inset:-16px;border-radius:38px;z-index:1}
-.hero-chip{position:absolute;width:88px;height:88px;border-radius:50%;overflow:hidden;border:4px solid #fff;box-shadow:var(--sh);z-index:4;animation:chipBob 4.4s ease-in-out infinite}
-[data-theme=dark] .hero-chip{border-color:#141a3f}
-.hero-chip img{width:100%;height:100%;object-fit:cover}
-.hero-chip.c1{left:-8%;top:14%;animation-delay:0s}
-.hero-chip.c2{right:-6%;top:34%;animation-delay:-1.4s}
-.hero-chip.c3{left:4%;bottom:2%;animation-delay:-2.8s}
-@keyframes chipBob{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-12px) rotate(6deg)}}
-.hero-sticker{position:absolute;right:-2%;bottom:16%;z-index:5;background:var(--grad-hot);color:#fff;font-family:var(--ff-d);padding:9px 15px;border-radius:var(--pill);transform:rotate(-7deg);box-shadow:var(--sh);font-size:.85rem;animation:chipBob 5s ease-in-out -1s infinite}
-.mini-bear{position:absolute;z-index:5;width:54px;height:54px;filter:drop-shadow(0 8px 14px rgba(230,38,111,.35))}
-.mini-bear svg{width:100%;height:100%;animation:bob 4.6s ease-in-out infinite}
-.mini-bear.b1{left:34%;top:-4%}
-.mini-bear.b2{right:14%;top:-2%;animation-delay:-2s}
-@keyframes bob{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-16px) rotate(6deg)}}
-
-/* ================= MARQUEE ================= */
-.marquee{overflow:hidden;background:var(--grad-candy);color:#fff;font-weight:800;font-size:.92rem;letter-spacing:.09em;padding:13px 0;box-shadow:var(--sh-sm);text-transform:uppercase}
-.mtrack{display:flex;width:max-content;animation:mq 26s linear infinite;white-space:nowrap}
-.marquee:hover .mtrack{animation-play-state:paused}
-.mtrack span{padding-right:56px}
-@keyframes mq{to{transform:translateX(-50%)}}
-</style>
-<style>
-/* ================= CARDS / GRIDS ================= */
-.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
-.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
-.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
-.card{background:var(--card);border:1px solid var(--linea);border-radius:var(--r-lg);padding:26px;box-shadow:var(--sh-sm);transition:transform .4s var(--ease),box-shadow .4s,border-color .4s;position:relative;overflow:hidden}
-.card:hover{transform:translateY(-7px) rotate(-.4deg);box-shadow:var(--sh);border-color:rgba(255,77,136,.45)}
-.card .ic{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;margin-bottom:14px;background:var(--grad-sun);color:#5a3a00;box-shadow:0 8px 18px rgba(255,176,32,.3)}
-[data-theme=dark] .card .ic{color:#2d1b02}
-.card .ic svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.card h3{margin-bottom:.35em;font-size:1.22rem}
-.card p{color:var(--suave);font-size:.95rem;margin:0;font-weight:500}
-
-/* ================= FOTO UNIFICADA ================= */
-.photo{position:relative;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--linea);box-shadow:var(--sh);isolation:isolate;display:block;text-decoration:none}
-.photo img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
-.photo:hover img{transform:scale(1.08) rotate(1deg)}
-.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(214,31,66,.55));pointer-events:none;transition:opacity .4s}
-.photo figcaption,.photo .cap{position:absolute;left:14px;bottom:14px;z-index:2;background:rgba(255,255,255,.95);color:#33172b;font-weight:800;font-size:.82rem;padding:8px 14px;border-radius:var(--pill);box-shadow:var(--sh-sm)}
-[data-theme=dark] .photo figcaption,[data-theme=dark] .photo .cap{background:rgba(16,20,52,.92);color:#eef2ff}
-
-/* ================= SABORES: FICHAS FOTO ================= */
-.fcard{padding:0;overflow:hidden}
-.fcard .fph{position:relative;height:170px;overflow:hidden;background:var(--grad-sun)}
-.fcard .fph img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
-.fcard:hover .fph img{transform:scale(1.1) rotate(1deg)}
-.fcard .fph::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,transparent 40%,rgba(214,31,66,.35));transition:opacity .4s}
-.fcard .fph .bearb{position:absolute;right:12px;bottom:10px;width:74px;height:74px;z-index:3;filter:drop-shadow(0 8px 14px rgba(230,38,111,.4));transition:transform .45s var(--spring)}
-.fcard:hover .fph .bearb{transform:translateY(-6px) rotate(-8deg)}
-.fcard .fbody{padding:26px 22px 22px;display:flex;flex-direction:column;gap:8px;flex:1}
-.fcard h3{margin:0}
-.fcard .fdesc{color:var(--suave);font-size:.92rem;margin:0;flex:1;font-weight:500}
-.fcard .frow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
-.price{font-family:var(--ff-d);font-size:1.35rem;color:var(--rosa-osc)}
-[data-theme=dark] .price{color:var(--amarillo)}
-
-/* ================= LAB DE SABORES ================= */
-.lab{display:grid;grid-template-columns:auto 1fr;gap:clamp(18px,4vw,44px);align-items:center;background:var(--card);border:1px solid var(--linea);border-radius:var(--r-lg);padding:clamp(22px,4vw,40px);box-shadow:var(--sh);margin-bottom:clamp(28px,5vw,48px);position:relative;overflow:hidden}
-.lab::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,209,102,.35),transparent 70%);pointer-events:none}
-.lab-visual{position:relative;width:clamp(170px,32vw,250px);aspect-ratio:1;display:grid;place-items:center}
-.labring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-.labring circle{animation:dashFlow 12s linear infinite}
-.lab-photo{position:absolute;inset:9%;border-radius:50%;overflow:hidden;border:5px solid #fff;box-shadow:var(--sh-lg)}
-[data-theme=dark] .lab-photo{border-color:#141a3f}
-.lab-photo img{width:100%;height:100%;object-fit:cover}
-.lab-photo .bearb{position:absolute;right:4%;bottom:4%;width:32%;height:32%;filter:drop-shadow(0 8px 14px rgba(230,38,111,.45));animation:bob 5s ease-in-out infinite;border-radius:50%}
-.lab-photo .bearb svg{width:100%;height:100%}
-.ftabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px}
-.ftab{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:var(--pill);border:2px solid var(--linea);background:var(--card);font-weight:800;font-size:.9rem;transition:all .25s var(--ease)}
-.ftab i{width:13px;height:13px;border-radius:50%;background:var(--fc);transition:transform .3s var(--spring)}
-.ftab:hover{transform:translateY(-2px)}
-.ftab.on{border-color:var(--fc);background:color-mix(in srgb,var(--fc) 12%,transparent)}
-.ftab.on i{transform:scale(1.3)}
-.lab h3{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:.2em}
-.lab .fdesc{color:var(--suave);font-weight:500;margin-bottom:14px}
-.fstats{display:flex;gap:10px;flex-wrap:wrap}
-.fstat{background:var(--bg2);border:1.5px dashed var(--rosa);border-radius:var(--r-sm);padding:10px 14px;text-align:center;min-width:78px}
-.fstat b{display:block;font-family:var(--ff-d);font-size:1.2rem;color:var(--rosa-osc)}
-[data-theme=dark] .fstat b{color:var(--azul)}
-.fstat span{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--suave)}
-.lab-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-
-/* ================= NUTRICIÓN ================= */
-.ntable{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-sm);border:1px solid var(--linea)}
-.ntable th{background:var(--grad-hot);color:#fff;font-family:var(--ff-b);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;padding:14px 18px;text-align:left;font-weight:900}
-.ntable td{padding:13px 18px;border-top:1px solid var(--linea);font-weight:600}
-.ntable tr:hover td{background:rgba(255,77,136,.06)}
-.ntable td.num{font-variant-numeric:tabular-nums;text-align:right;font-weight:800}
-.ntable .vs{color:var(--rojo)}
-.meter{height:12px;background:rgba(255,77,136,.12);border-radius:var(--pill);overflow:hidden}
-.meter i{display:block;height:100%;border-radius:inherit;background:var(--grad-candy);width:0;transition:width 1.1s var(--ease)}
-.meter.bad i{background:linear-gradient(90deg,#ff2e55,#d61f42)}
-.metric{margin-bottom:16px}
-.metric .mrow{display:flex;justify-content:space-between;font-weight:800;font-size:.92rem;margin-bottom:6px}
-.sealgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
-.seal{background:var(--card);border:2px solid var(--linea);border-radius:var(--r);padding:18px 14px;text-align:center;font-weight:800;font-size:.84rem;transition:transform .35s var(--spring),border-color .3s}
-.seal:hover{transform:rotate(-2deg) scale(1.05);border-color:var(--amarillo)}
-.seal svg{width:26px;height:26px;stroke:var(--rosa-osc);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto 8px}
-[data-theme=dark] .seal svg{stroke:var(--azul)}
-
-/* ================= TIPBOX (cuadritos) ================= */
-.tipbox{background:var(--bg2);border:1.5px solid var(--linea);border-radius:var(--r-sm);margin:10px 0;transition:border-color .25s,transform .25s}
-.tipbox:hover{border-color:var(--rosa);transform:translateX(3px)}
-.tipbox summary{list-style:none;cursor:pointer;padding:11px 15px 11px 40px;font-weight:800;font-size:.9rem;display:flex;align-items:center;color:var(--rosa-osc);position:relative}
-[data-theme=dark] .tipbox summary{color:var(--azul)}
-.tipbox summary::-webkit-details-marker{display:none}
-.tipbox summary::before{content:"";position:absolute;left:13px;top:50%;width:16px;height:16px;transform:translateY(-50%);background:var(--grad-sun);border-radius:50% 50% 50% 4px;box-shadow:0 2px 6px rgba(255,176,32,.4)}
-.tipbox[open] summary{border-bottom:1px dashed var(--linea)}
-.tipbox .tbody{padding:12px 15px 14px;color:var(--suave);font-size:.9rem;font-weight:500;animation:pageIn .35s var(--ease)}
-.tipbox .tbody b{color:var(--tinta)}
-.tipgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
-
-/* ================= HISTORIA ================= */
-.story{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,52px);align-items:center}
-.steps{counter-reset:st;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:14px}
-.step{counter-increment:st;background:var(--card);border:1px solid var(--linea);border-radius:var(--r);padding:26px 22px 22px;position:relative;box-shadow:var(--sh-sm);transition:transform .35s var(--ease)}
-.step:hover{transform:translateY(-6px) rotate(.5deg)}
-.step::before{content:counter(st,decimal-leading-zero);position:absolute;top:-16px;left:20px;width:46px;height:46px;border-radius:16px;color:#fff;display:grid;place-items:center;font-family:var(--ff-d);font-size:1rem;box-shadow:var(--sh-sm);animation:popIn .6s var(--spring) both}
-.step:nth-child(1)::before{background:var(--grad-hot)}
-.step:nth-child(2)::before{background:var(--grad-sun)}
-.step:nth-child(3)::before{background:linear-gradient(135deg,#1d4ed8,#2563eb)}
-.step:nth-child(4)::before{background:linear-gradient(135deg,#7c3aed,#e6266f)}
-@keyframes popIn{from{opacity:0;transform:scale(.4) rotate(-14deg)}to{opacity:1;transform:scale(1) rotate(0)}}
-.step h3{margin:12px 0 .3em;font-size:1.15rem}
-.step p{color:var(--suave);font-size:.92rem;margin:0;font-weight:500}
-.tline{list-style:none;margin:0;padding:0;position:relative}
-.tline::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:4px;border-radius:4px;background:linear-gradient(180deg,#ff2e55,#ff8a3d,#ffd166,#4da3ff)}
-.tline li{position:relative;padding:0 0 22px 44px}
-.tline li::before{content:"";position:absolute;left:2px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--card);border:4px solid var(--rojo);transition:transform .3s var(--spring)}
-.tline li:hover::before{transform:scale(1.3)}
-.tline li:nth-child(even)::before{border-color:var(--naranja)}
-.tline li:last-child::before{border-color:var(--azul,#4da3ff)}
-[data-theme=dark] .tline li:last-child::before{border-color:#4da3ff}
-.tdate{display:inline-block;font-size:.7rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--rosa-osc);background:rgba(255,77,136,.12);padding:3px 10px;border-radius:var(--pill);margin-bottom:4px}
-[data-theme=dark] .tdate{color:var(--azul);background:rgba(77,163,255,.14)}
-.tline h4{margin:0 0 2px;font-family:var(--ff-d);font-size:1.05rem;font-weight:400}
-.tline p{margin:0;color:var(--suave);font-size:.92rem;font-weight:500}
-
-/* ================= TIENDA ================= */
-.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;align-items:stretch}
-.pack{background:var(--card);border:2px solid var(--linea);border-radius:var(--r-lg);padding:26px;position:relative;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:all .35s var(--ease);box-shadow:var(--sh-sm)}
-.pack:hover{transform:translateY(-6px);box-shadow:var(--sh)}
-.pack.sel{border-color:var(--rosa);box-shadow:0 0 0 4px rgba(255,77,136,.16),var(--sh);transform:translateY(-6px)}
-.pack.feat{border-color:transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad-candy) border-box;border:3px solid transparent}
-.pack.feat::before{content:none}
-.pack h3{margin:0;font-size:1.35rem}
-.pack .pdesc{color:var(--suave);font-size:.92rem;flex:1;margin:0;font-weight:500}
-.pack .pprice{font-family:var(--ff-d);font-size:2rem;color:var(--rosa-osc);line-height:1}
-[data-theme=dark] .pack .pprice{color:var(--amarillo)}
-.pack .old{text-decoration:line-through;color:var(--tenue);font-size:.95rem;font-weight:600;margin-right:8px}
-.pack .save{display:inline-block;background:var(--grad-sun);color:#5a3a00;font-weight:900;font-size:.72rem;padding:4px 10px;border-radius:var(--pill);margin-left:8px;vertical-align:middle}
-.pack ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
-.pack ul li{display:flex;gap:8px;align-items:center;font-size:.9rem;color:var(--suave);font-weight:600}
-.pack ul li svg{width:15px;height:15px;stroke:var(--rosa);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.pack ul li.b{color:var(--tinta)}
-.calc{background:var(--card);border:1px solid var(--linea);border-radius:var(--r-lg);padding:clamp(20px,4vw,34px);box-shadow:var(--sh-sm);display:grid;gap:18px;max-width:640px;margin-inline:auto}
-.calc label{font-weight:900;display:flex;justify-content:space-between;margin-bottom:8px}
-.calc output{font-family:var(--ff-d);color:var(--rosa-osc);font-size:1.2rem}
-[data-theme=dark] .calc output{color:var(--azul)}
-.calc input[type=range]{width:100%;accent-color:var(--rosa);height:10px}
-.calc .crow{display:flex;justify-content:space-between;align-items:center;background:var(--bg2);border:1.5px dashed var(--rosa);border-radius:var(--r);padding:14px 18px;font-weight:800}
-.calc .crow b{font-family:var(--ff-d);font-size:1.5rem;color:var(--rosa-osc)}
-[data-theme=dark] .calc .crow b{color:var(--amarillo)}
-.calc .hint{margin:0;font-size:.88rem;color:var(--suave);font-weight:600}
-.calc .hint b{color:var(--rosa-osc)}
-[data-theme=dark] .calc .hint b{color:var(--azul)}
-.stockline{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--suave);font-weight:700}
-.stockline .bar{flex:1;height:10px;background:rgba(255,77,136,.14);border-radius:var(--pill);overflow:hidden}
-.stockline .bar i{display:block;height:100%;width:70%;border-radius:inherit;background:var(--grad-candy);animation:barShine 2.5s linear infinite;background-size:200% 100%}
-@keyframes barShine{to{background-position:200% 0}}
-
-/* ================= CARRITO ================= */
-.overlay{position:fixed;inset:0;z-index:950;background:rgba(51,23,43,.5);backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:.3s}
-[data-theme=dark] .overlay{background:rgba(4,8,30,.55)}
-.overlay.show{opacity:1;visibility:visible}
-.drawer{position:fixed;top:0;right:0;bottom:0;z-index:960;width:min(420px,92vw);background:var(--bg);box-shadow:var(--sh-lg);transform:translateX(105%);transition:transform .45s var(--ease);display:flex;flex-direction:column;border-left:1px solid var(--linea)}
-.drawer.open{transform:none}
-.drawer-h{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--linea)}
-.drawer-h h3{margin:0;font-size:1.15rem;display:flex;align-items:center;gap:9px}
-.drawer-h h3 svg{width:22px;height:22px;stroke:var(--rosa-osc);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.drawer-b{flex:1;overflow:auto;padding:16px 20px;display:flex;flex-direction:column;gap:10px}
-.cline{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--linea);border-radius:var(--r-sm);padding:10px 12px;animation:pageIn .3s var(--ease)}
-.cline .cdot{width:40px;height:40px;border-radius:13px;overflow:hidden;flex-shrink:0;border:2px solid #fff;box-shadow:var(--sh-sm)}
-[data-theme=dark] .cline .cdot{border-color:#141a3f}
-.cline .cdot img{width:100%;height:100%;object-fit:cover}
-.cline .cinfo{flex:1;min-width:0}
-.cline b{display:block;font-size:.9rem}
-.cline small{color:var(--suave);font-weight:600}
-.cline .qty{display:flex;align-items:center;gap:6px}
-.cline .qty button{width:28px;height:28px;border-radius:9px;background:var(--bg2);font-weight:900;border:1px solid var(--linea);display:grid;place-items:center;transition:transform .15s var(--spring)}
-.cline .qty button:hover{transform:scale(1.15)}
-.cline .qty span{min-width:20px;text-align:center;font-weight:900}
-.cempty{text-align:center;color:var(--suave);padding:40px 10px;font-weight:500}
-.cempty svg{width:90px;height:90px;margin:0 auto 12px;animation:bob 4s ease-in-out infinite}
-.drawer-f{padding:16px 20px calc(16px + env(safe-area-inset-bottom));border-top:1px solid var(--linea);display:grid;gap:10px}
-.drawer-f .tot{display:flex;justify-content:space-between;font-weight:800;font-size:1.05rem}
-.drawer-f .tot b{font-family:var(--ff-d);color:var(--rosa-osc);font-size:1.4rem}
-[data-theme=dark] .drawer-f .tot b{color:var(--amarillo)}
-.drawer-f small{text-align:center;color:var(--tenue);font-weight:600}
-.xbtn{width:36px;height:36px;border-radius:12px;background:var(--bg2);border:1px solid var(--linea);display:grid;place-items:center}
-.xbtn svg{width:14px;height:14px;stroke:var(--tinta);fill:none;stroke-width:2.5;stroke-linecap:round}
-
-/* ================= FAQ ================= */
-.faq{max-width:760px;margin-inline:auto;display:grid;gap:12px}
-.qa{background:var(--card);border:1px solid var(--linea);border-radius:var(--r);overflow:hidden;transition:border-color .25s,box-shadow .3s}
-.qa.on{border-color:var(--rosa);box-shadow:var(--sh-sm)}
-.qa button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;padding:17px 20px;font-weight:800;font-size:1rem}
-.qa .chev{width:30px;height:30px;border-radius:50%;background:var(--bg2);display:grid;place-items:center;transition:transform .4s var(--spring),background .3s;flex-shrink:0}
-.qa .chev svg{width:14px;height:14px;stroke:var(--rosa-osc);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.qa.on .chev{transform:rotate(180deg);background:var(--grad-hot)}
-.qa.on .chev svg{stroke:#fff}
-.qa .ans{max-height:0;overflow:hidden;transition:max-height .45s var(--ease)}
-.qa .ans>div{padding:0 20px 18px;color:var(--suave);font-weight:500;font-size:.95rem}
-
-/* ================= CONTACTO ================= */
-.cband{background:var(--grad-foot);border-radius:var(--r-lg);color:#fff;padding:clamp(26px,5vw,52px);position:relative;overflow:hidden;box-shadow:var(--sh-lg)}
-[data-theme=dark] .cband{border:1px solid var(--linea)}
-.cband::before{content:"";position:absolute;width:380px;height:380px;right:-100px;top:-120px;border-radius:50%;background:radial-gradient(circle,rgba(255,209,102,.4),transparent 70%);animation:blobPulse 6s ease-in-out infinite alternate}
-.cband::after{content:"";position:absolute;width:320px;height:320px;left:-90px;bottom:-120px;border-radius:50%;background:radial-gradient(circle,rgba(77,163,255,.35),transparent 70%);animation:blobPulse 7s ease-in-out -3s infinite alternate}
-@keyframes blobPulse{to{transform:scale(1.25) translate(14px,10px)}}
-.cband .cin{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,4vw,44px);align-items:start}
-.cband h2{color:#fff}
-.cband p{color:rgba(255,255,255,.85);font-weight:500}
-.wchips{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
-.wchip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);padding:8px 13px;border-radius:var(--pill);font-weight:700;font-size:.82rem;display:inline-flex;align-items:center;gap:7px;backdrop-filter:blur(6px)}
-.wchip svg{width:14px;height:14px;stroke:#ffd166;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.field{display:grid;gap:6px;margin-bottom:14px}
-.field label{font-weight:800;font-size:.88rem;color:#fff}
-.field input,.field textarea,.field select{width:100%;min-height:48px;padding:12px 16px;border-radius:var(--r-sm);border:2px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff;font-weight:600;transition:border .2s,box-shadow .2s}
-.field select option{color:#33172b}
-.field textarea{min-height:110px;resize:vertical}
-.field input::placeholder,.field textarea::placeholder{color:rgba(255,255,255,.55)}
-.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--amarillo);box-shadow:0 0 0 3px rgba(255,209,102,.3)}
-.ferr{color:#ffd0e0;font-size:.8rem;font-weight:800;min-height:1em}
-.fok{display:none;background:rgba(255,209,102,.18);border:1.5px dashed rgba(255,209,102,.65);color:#fff4d6;padding:13px 16px;border-radius:var(--r-sm);font-weight:800;font-size:.92rem}
-.fok.show{display:block;animation:pageIn .35s var(--ease)}
-.mapcard{background:var(--card);border:1px solid var(--linea);border-radius:var(--r-lg);padding:16px;box-shadow:var(--sh-sm)}
-.mapart{position:relative;border-radius:var(--r);overflow:hidden;min-height:230px;background:
-  radial-gradient(circle at 22% 28%,rgba(255,77,136,.35),transparent 42%),
-  radial-gradient(circle at 78% 60%,rgba(255,209,102,.4),transparent 46%),
-  radial-gradient(circle at 50% 90%,rgba(77,163,255,.25),transparent 50%),
-  linear-gradient(150deg,#ffe3ee,#fff3d6)}
-[data-theme=dark] .mapart{background:radial-gradient(circle at 22% 28%,rgba(255,77,109,.25),transparent 42%),radial-gradient(circle at 78% 60%,rgba(77,163,255,.22),transparent 46%),linear-gradient(150deg,#141a3f,#1a2050)}
-.mapart .grid{position:absolute;inset:0;background:linear-gradient(rgba(51,23,43,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(51,23,43,.06) 1px,transparent 1px);background-size:34px 34px}
-.mappin{position:absolute;background:rgba(255,255,255,.95);border:2px solid #fff;box-shadow:var(--sh);border-radius:var(--pill);padding:7px 12px;font-weight:800;font-size:.76rem;display:inline-flex;align-items:center;gap:7px;color:#33172b;animation:chipBob 4.5s ease-in-out infinite}
-.mappin svg{width:13px;height:13px;fill:var(--rojo)}
-.mappin.p2 svg{fill:var(--naranja)}.mappin.p3 svg{fill:var(--azul,#2563eb)}
-[data-theme=dark] .mappin{background:rgba(16,20,52,.92);color:#eef2ff}
-
-/* ================= DULCITA ================= */
-.botfab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:970;width:62px;height:62px;border-radius:50%;background:var(--grad-hot);display:grid;place-items:center;box-shadow:0 14px 32px rgba(230,38,111,.5);transition:transform .3s var(--spring)}
-.botfab:hover{transform:scale(1.1) rotate(-8deg)}
-.botfab::after{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid rgba(255,77,136,.5);animation:ringWave 2.4s ease-out infinite}
-@keyframes ringWave{0%{transform:scale(1);opacity:1}100%{transform:scale(1.5);opacity:0}}
-.botfab svg{width:36px;height:36px;--g:#fff;--gd:#e6266f}
-.botfab .bdg{position:absolute;top:-2px;right:-2px;width:19px;height:19px;border-radius:50%;background:var(--amarillo);border:2px solid var(--bg);display:grid;place-items:center;font-size:.62rem;font-weight:900;color:#5a3a00}
-[data-theme=dark] .botfab .bdg{border-color:#0b0f2a}
-.botpanel{position:fixed;right:18px;bottom:calc(94px + env(safe-area-inset-bottom));z-index:975;width:min(360px,calc(100vw - 28px));background:var(--card);border:1px solid var(--linea);border-radius:var(--r-lg);box-shadow:var(--sh-lg);display:none;flex-direction:column;overflow:hidden;transform:translateY(14px) scale(.97);opacity:0;transition:.32s var(--ease)}
-.botpanel.open{display:flex;transform:none;opacity:1}
-.bot-h{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--grad-hot);color:#fff}
-[data-theme=dark] .bot-h{background:linear-gradient(120deg,#12173a,#1d4ed8 60%,#e11d48)}
-.bot-h .bavatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.22);display:grid;place-items:center}
-.bot-h .bavatar svg{width:26px;height:26px;--g:#fff;--gd:#e6266f}
-.bot-h b{font-family:var(--ff-d);display:block;line-height:1.1;font-weight:400}
-.bot-h small{font-size:.72rem;opacity:.9;display:flex;align-items:center;gap:5px}
-.bot-h small::before{content:"";width:8px;height:8px;border-radius:50%;background:#7CFC9A;box-shadow:0 0 6px #7CFC9A;animation:pulseDot 1.6s ease-in-out infinite}
-.bot-h .xbtn{margin-left:auto;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);transition:transform .2s var(--spring),background .2s}
-.bot-h .xbtn:hover{transform:scale(1.1);background:rgba(255,255,255,.3)}
-.bot-h .xbtn svg{stroke:#fff}
-@keyframes pulseDot{50%{opacity:.4}}
-.bot-m{max-height:300px;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:8px;background:var(--bg2)}
-.bmsg{max-width:86%;padding:10px 14px;border-radius:16px;font-size:.9rem;font-weight:500;animation:pageIn .3s var(--ease);line-height:1.5}
-.bmsg.bot{align-self:flex-start;background:var(--card);border:1px solid var(--linea);border-bottom-left-radius:5px;box-shadow:var(--sh-sm)}
-.bmsg.user{align-self:flex-end;background:var(--grad-hot);color:#fff;border-bottom-right-radius:5px}
-.bmsg a{color:var(--rosa-osc);font-weight:800;text-decoration:underline}
-[data-theme=dark] .bmsg a{color:var(--azul)}
-.bmsg .blink{display:inline-flex;gap:4px;padding:2px 0}
-.bmsg .blink i{width:7px;height:7px;border-radius:50%;background:var(--rosa);animation:tdot 1s infinite}
-.bmsg .blink i:nth-child(2){animation-delay:.18s}.bmsg .blink i:nth-child(3){animation-delay:.36s}
-@keyframes tdot{50%{opacity:.25;transform:translateY(-3px)}}
-.bot-chips{display:flex;gap:7px;flex-wrap:wrap;padding:10px 14px;background:var(--card);border-top:1px solid var(--linea)}
-.bchip{background:var(--bg2);border:1.5px solid var(--linea);padding:7px 12px;border-radius:var(--pill);font-weight:800;font-size:.78rem;color:var(--rosa-osc);transition:all .2s}
-[data-theme=dark] .bchip{color:var(--azul)}
-.bchip:hover{background:var(--grad-hot);color:#fff;border-color:transparent;transform:translateY(-2px)}
-.bot-in{display:flex;gap:8px;padding:10px 14px calc(12px + env(safe-area-inset-bottom) / 2);background:var(--card);border-top:1px solid var(--linea)}
-.bot-in input{flex:1;min-height:44px;padding:10px 16px;border-radius:var(--pill);border:2px solid var(--linea);background:var(--bg2);font-weight:600}
-.bot-in input:focus{outline:none;border-color:var(--rosa)}
-.bot-in button{width:44px;height:44px;border-radius:50%;background:var(--grad-hot);color:#fff;flex-shrink:0;display:grid;place-items:center;transition:transform .2s var(--spring)}
-.bot-in button:hover{transform:scale(1.12) rotate(-8deg)}
-.bot-in button svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* legibilidad sobre degradados */
-.btn-fresa,.btn-wa,.marquee,.nav-links a.on,.mnav a.on,.hero-sticker,.bot-h,.bmsg.user,.pack.feat .badge{text-shadow:0 1px 3px rgba(0,0,0,.32)}
-.mappin{outline:2px solid rgba(255,255,255,.35);outline-offset:-2px}
-
-/* ================= TOAST + CONFETTI ================= */
-#toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translate(-50%,90px);z-index:990;background:var(--tinta);color:var(--bg);padding:13px 22px;border-radius:var(--pill);font-weight:800;box-shadow:var(--sh-lg);opacity:0;transition:.4s var(--ease);pointer-events:none;display:flex;align-items:center;gap:9px;max-width:calc(100vw - 30px);font-size:.95rem}
-#toast.show{transform:translate(-50%,0);opacity:1}
-#toast svg{width:17px;height:17px;stroke:#3ddc97;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.conf{position:fixed;z-index:995;width:10px;height:14px;border-radius:3px;pointer-events:none;animation:confF 1s ease-out forwards}
-@keyframes confF{to{transform:translate(var(--dx),var(--dy)) rotate(720deg);opacity:0}}
-
-/* ================= FOOTER ================= */
-footer{background:var(--grad-foot);color:#ffe9f1;margin-top:0;position:relative;padding:0 0 28px;overflow:hidden}
-[data-theme=dark] footer{border-top:1px solid var(--linea)}
-footer::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:var(--grad-candy)}
-footer::after{content:"";position:absolute;width:300px;height:300px;right:-80px;bottom:-140px;border-radius:50%;background:radial-gradient(circle,rgba(255,209,102,.25),transparent 70%);pointer-events:none}
-.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px;padding:52px 0 34px;position:relative;z-index:2}
-.fgrid h4{color:#fff;font-size:.95rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;font-family:var(--ff-b);font-weight:900}
-.fgrid ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
-.fgrid a{color:#ffd6e5;text-decoration:none;font-weight:600;font-size:.92rem;display:inline-flex;align-items:center;gap:7px;transition:color .2s,transform .2s}
-.fgrid a:hover{color:var(--amarillo);transform:translateX(4px)}
-.fbrand{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.fbrand .logo{width:48px;height:48px;border-radius:15px;background:var(--grad-sun);display:grid;place-items:center}
-.fbrand .logo svg{width:36px;height:36px;--g:#e6266f;--gd:#7a1233}
-.fbrand b{font-family:var(--ff-d);font-size:1.3rem;color:#fff;display:block;line-height:1;font-weight:400}
-.fbrand small{color:#ffd6e5;font-weight:800;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
-.fbottom{border-top:1px solid rgba(255,255,255,.18);padding-top:20px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:.85rem;font-weight:600;color:#ffd6e5;position:relative;z-index:2}
-.fbottom svg{width:13px;height:13px;fill:#ff4d88;vertical-align:-2px}
-
-/* ================= TAB BAR + SHEET ================= */
-.tabbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:940;background:var(--bg);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(16px);border-top:1px solid var(--linea);padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
-.tabbar ul{display:flex;justify-content:space-around;list-style:none;margin:0;padding:0}
-.tabbar a,.tabbar button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.64rem;font-weight:800;color:var(--suave);text-decoration:none;padding:6px 12px;border-radius:14px;transition:color .2s,transform .2s}
-.tabbar .ti{font-size:1.25rem;line-height:1;display:grid;place-items:center}
-.tabbar .ti svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.tabbar a.on{color:var(--rosa-osc)}
-[data-theme=dark] .tabbar a.on{color:var(--azul)}
-.tabbar a.on .ti{transform:translateY(-2px) scale(1.15)}
-.sheet{position:fixed;left:10px;right:10px;bottom:calc(66px + env(safe-area-inset-bottom));z-index:945;background:var(--card);border:1px solid var(--linea);border-radius:var(--r-lg);box-shadow:var(--sh-lg);padding:18px;display:none;grid-template-columns:1fr 1fr;gap:10px}
-.sheet.open{display:grid;animation:pageIn .3s var(--ease)}
-.sheet a{display:flex;align-items:center;gap:10px;padding:13px 14px;border-radius:var(--r-sm);background:var(--bg2);text-decoration:none;color:var(--tinta);font-weight:800;font-size:.9rem;transition:transform .2s var(--spring)}
-.sheet a:hover{transform:scale(1.03)}
-.sheet a svg{width:20px;height:20px;stroke:var(--rosa-osc);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-[data-theme=dark] .sheet a svg{stroke:var(--azul)}
-
-/* ================= REVEAL / STATS ================= */
-.rv{opacity:0;transform:translateY(26px) scale(.985);transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.rv.in{opacity:1;transform:none}
-.stat{text-align:center;background:var(--card);border:1px solid var(--linea);border-radius:var(--r);padding:22px 14px;box-shadow:var(--sh-sm);transition:transform .3s var(--spring)}
-.stat:hover{transform:translateY(-4px) scale(1.03)}
-.stat b{display:block;font-family:var(--ff-d);font-size:clamp(1.9rem,4vw,2.6rem);background:var(--grad-txt);-webkit-background-clip:text;background-clip:text;color:transparent}
-.stat span{font-size:.84rem;color:var(--suave);font-weight:700}
-
-/* ================= VIDA PERSISTENTE + SKELETON + VUELO ================= */
-@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-@keyframes softPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-@keyframes skShimmer{from{background-position:120% 0}to{background-position:-120% 0}}
-@keyframes wiggleBadge{0%,82%,100%{transform:rotate(6deg) scale(1)}84%{transform:rotate(-9deg) scale(1.18)}87%{transform:rotate(15deg) scale(1.18)}90%{transform:rotate(-4deg) scale(1.08)}93%{transform:rotate(10deg) scale(1.12)}96%{transform:rotate(6deg) scale(1)}}
-.brand .logo{animation:softPulse 3.6s ease-in-out infinite}
-.brand:hover .logo,.botfab:hover{animation:none}
-.price-pill{animation:softPulse 2.7s ease-in-out infinite}
-.botfab{animation:softPulse 3s ease-in-out infinite}
-.fbrand .logo{animation:softPulse 4.2s ease-in-out infinite}
-.bavatar svg{animation:bob 4.2s ease-in-out infinite}
-.grad-txt{background-size:300% auto;animation:gradientShift 4.5s linear infinite}
-.stat b{background-size:300% auto;animation:gradientShift 4s linear infinite}
-.fcard .bearb{animation:bob 4.6s ease-in-out infinite}
-.fcard:nth-child(2) .bearb{animation-delay:-1.6s}
-.fcard:nth-child(3) .bearb{animation-delay:-3s}
-.fcard:nth-child(4) .bearb{animation-delay:-2.2s}
-.pack.feat .badge{animation:wiggleBadge 3.6s ease-in-out infinite}
-.sk{background:linear-gradient(100deg,rgba(255,77,136,.07) 34%,rgba(255,209,102,.22) 50%,rgba(255,77,136,.07) 66%) !important;background-size:220% 100% !important;animation:skShimmer 1.5s linear infinite !important}
-[data-theme=dark] .sk{background:linear-gradient(100deg,rgba(77,163,255,.07) 34%,rgba(255,255,255,.13) 50%,rgba(77,163,255,.07) 66%) !important;background-size:220% 100% !important}
-.sk img{opacity:0}
-.photo img,.fph img,.lab-photo img,.hero-photo img,.hero-chip img{transition:opacity .55s var(--ease),transform .8s var(--ease)}
-.fly{position:fixed;z-index:997;width:44px;height:44px;border-radius:50%;pointer-events:none;box-shadow:var(--sh);border:3px solid #fff;object-fit:cover;display:block}
-[data-theme=dark] .fly{border-color:#141a3f}
-
-/* ================= OSITOS REALES + MAPA REAL + VIDA EXTRA ================= */
-.brand .logo,.fbrand .logo,.bavatar{position:relative;overflow:hidden}
-.brand .logo img,.fbrand .logo img,.bavatar img,.botfab img,.mini-bear img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.botfab{overflow:hidden}
-.botfab .bdg{z-index:2}
-.mini-bear{border-radius:50%;overflow:hidden;background:var(--grad-sun)}
-.bearb{border-radius:50%;overflow:hidden;border:3px solid #fff;background:var(--grad-sun);box-shadow:var(--sh-sm)}
-.bearb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.bearb svg{width:100%;height:100%;display:block}
-.cline .cdot img{width:100%;height:100%;object-fit:cover;display:block}
-.maptitle{display:flex;align-items:center;gap:9px;background:var(--bg2);border:1.5px solid var(--linea);border-bottom:none;border-radius:var(--r-sm) var(--r-sm) 0 0;padding:12px 14px;font-weight:800;font-size:.86rem;color:var(--rosa-osc)}
-[data-theme=dark] .maptitle{color:var(--azul)}
-.maptitle svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.mapreal{position:relative;border-radius:0 0 var(--r) var(--r);overflow:hidden;min-height:360px;box-shadow:inset 0 0 0 1px var(--linea)}
-.mapbar{position:absolute;left:0;right:0;bottom:0;height:27px;display:flex;align-items:center;justify-content:center;gap:5px;background:var(--card);font-size:.66rem;font-weight:700;color:var(--suave);border-top:1px solid var(--linea)}
-.mapbar a{color:var(--rosa-osc);text-decoration:underline;font-weight:800}
-[data-theme=dark] .mapbar a{color:var(--azul)}
-.mapreal iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-[data-theme=dark] .mapreal iframe{filter:invert(.9) hue-rotate(185deg) saturate(.8) brightness(.93)}
-.mappin{pointer-events:none;box-shadow:var(--sh)}
-.mappin.here{background:var(--grad-hot);color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.32)}
-.mappin.here svg{fill:#fff}
-.locgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px}
-.locchip{display:flex;align-items:center;gap:9px;padding:12px 14px;border-radius:var(--r-sm);background:var(--bg2);border:1.5px solid var(--linea);text-decoration:none;color:var(--tinta);font-weight:800;font-size:.88rem;transition:transform .25s var(--spring),border-color .25s}
-.locchip:hover{transform:translateY(-3px);border-color:var(--rosa)}
-.locchip svg{width:17px;height:17px;stroke:var(--rosa-osc);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-[data-theme=dark] .locchip svg{stroke:var(--azul)}
-@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.card .ic{animation:bob 4.2s ease-in-out infinite}
-.card:nth-child(2n) .ic{animation-delay:-1.4s}
-.card:nth-child(3n) .ic{animation-delay:-2.6s}
-.stat{animation:floaty 5s ease-in-out infinite}
-.stat:nth-child(2){animation-delay:-1.2s}
-.stat:nth-child(3){animation-delay:-2.4s}
-.stat:nth-child(4){animation-delay:-3.6s}
-.seal{animation:floaty 4.8s ease-in-out infinite}
-.seal:nth-child(2n){animation-delay:-1.6s}
-.icobtn.has{animation:cartGlow 1.8s ease-out infinite}
-@keyframes cartGlow{0%{box-shadow:0 0 0 0 rgba(255,77,136,.55)}100%{box-shadow:0 0 0 14px rgba(255,77,136,0)}}
-@media (max-width:640px){.mapreal{min-height:280px}}
-
-/* ================= RESPONSIVE ================= */
-@media (max-width:920px){
-  .nav-links{display:none}
-  .burger{display:flex}
-  .hero-in{grid-template-columns:1fr}
-  .hero-stage{height:min(440px,96vw);order:-1;margin-top:20px}
-  .story,.cband .cin{grid-template-columns:1fr}
-  .lab{grid-template-columns:1fr;text-align:center}
-  .ftabs,.fstats,.lab-cta{justify-content:center}
-  .fgrid{grid-template-columns:1fr 1fr}
-}
-@media (max-width:640px){
-  body{padding-bottom:calc(60px + env(safe-area-inset-bottom))}
-  .tabbar{display:block}
-  .hero h1{font-size:2.15rem}
-  .hero-cta .btn{flex:1;justify-content:center}
-  .botpanel{right:10px;bottom:calc(88px + env(safe-area-inset-bottom))}
-  .botfab{bottom:calc(78px + env(safe-area-inset-bottom));right:14px;width:56px;height:56px}
-  .botfab svg{width:32px;height:32px}
-  .fgrid{grid-template-columns:1fr}
-  .hero-sticker{display:none}
-  .hero-chip{width:68px;height:68px}
-}
-@media (max-width:480px){.brand small{display:none}.icobtn{width:38px;height:38px}.brand b{font-size:.95rem}}
-@media (max-width:420px){
-  .g4{grid-template-columns:1fr 1fr}
-  .fcard .fph{height:130px}
-  .hero-photo{width:min(300px,92%)}
-}
-
-/* ================= VIDA EXTRA POR SECCIÓN ================= */
-.kick{animation:softPulse 3.4s ease-in-out infinite}
-.hero-photo::after{inset:0;border-radius:36px;z-index:3;pointer-events:none;background:linear-gradient(110deg,transparent 42%,rgba(255,255,255,.22) 50%,transparent 58%);background-size:220% 100%;animation:photoShine 6.5s ease-in-out infinite}
-@keyframes photoShine{0%,55%{background-position:130% 0}80%,100%{background-position:-130% 0}}
-.hero-lead,.hero-cta,.hero-trust{opacity:0;animation:heroFade .7s var(--ease) forwards}
-.hero-lead{animation-delay:.85s}.hero-cta{animation-delay:1s}.hero-trust{animation-delay:1.15s}
-@keyframes heroFade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-[data-motion=off] .hero-lead,[data-motion=off] .hero-cta,[data-motion=off] .hero-trust{opacity:1;transform:none}
-.ftab.on i{animation:softPulse 1.8s ease-in-out infinite}
-.lab-photo img{animation:kenburns 9s ease-in-out infinite alternate}
-@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.12)}}
-.ntable th{background-size:200% 100%;animation:barShine 3.5s linear infinite}
-.metric .meter i{background-size:200% 100%;animation:barShine 2.4s linear infinite}
-.tline::before{background:linear-gradient(180deg,#ff2e55,#ff8a3d,#ffd166,#4da3ff,#ff2e55);background-size:100% 400%;animation:tlFlow 5s linear infinite}
-@keyframes tlFlow{from{background-position:0 0}to{background-position:0 -400%}}
-.tdate{animation:softPulse 3s ease-in-out infinite}
-.pack.feat::after{content:"";position:absolute;inset:-7px;border-radius:inherit;z-index:-1;background:var(--grad-candy);filter:blur(16px);opacity:.22;pointer-events:none;animation:haloPulse 3.6s ease-in-out infinite}
-@keyframes haloPulse{0%,100%{opacity:.16}50%{opacity:.34}}
-.pack .save{display:inline-block;animation:wiggle2 3.8s ease-in-out infinite}
-@keyframes wiggle2{0%,78%,100%{transform:rotate(0)}82%{transform:rotate(-9deg) scale(1.12)}86%{transform:rotate(7deg) scale(1.12)}90%{transform:rotate(-3deg)}}
-.pack .pprice{animation:softPulse 2.8s ease-in-out infinite}
-.qa{transition:border-color .25s,box-shadow .3s,transform .3s var(--ease)}
-.qa:hover{transform:translateY(-3px)}
-.wchip{animation:softPulse 3.2s ease-in-out infinite}
-.wchip:nth-child(2){animation-delay:-1s}.wchip:nth-child(3){animation-delay:-2s}
-footer::before{background-size:200% 100%;animation:barShine 4s linear infinite}
-
-/* ================= MOVIMIENTO (interruptor manual) + FONDO DE CARAMELO ================= */
-[data-motion=off] *,[data-motion=off] *::before,[data-motion=off] *::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
-[data-motion=off] .rv,[data-motion=off] .hero h1 .w{opacity:1;transform:none}
-[data-motion=off] .strike::after{transform:scaleX(1)}
-[data-motion=off] #bgfx{display:none}
-#bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none}
-#motionBtn.is-off{opacity:.5;outline:2px dashed var(--rosa);outline-offset:2px}
-@media print{
-  .nav,.tabbar,.botfab,.botpanel,.drawer,.overlay,#toast,.mnav,.sheet,.marquee,body::before{display:none !important}
-  .page{display:block !important}
-  body{background:#fff;color:#000}
-}
-</style>
-<!-- ============ PASÉ PROFESIONAL v2 ============
-     Objetivo: mismo carácter, menos ruido. Se retiran los bucles
-     decorativos permanentes y el fondo animado; se conservan las
-     interacciones (hover, entrada de página, skeletons, fly-to-cart). -->
-<style>
-/* 1 · Tipografía: Titan One solo en marca y h1; títulos con Outfit ------ */
-h2,h3,.bot-h b,.pack .pprice,.price-pill,.stat b,.fcard .fp h3{font-family:var(--ff-b);font-weight:800;letter-spacing:-.015em}
-h2{line-height:1.12}
-h3{font-weight:700}
-.cband h2{font-family:var(--ff-b);font-weight:800}
-
-/* 2 · Fuera los pulsos y flotaciones permanentes ---------------------- */
-.brand .logo,.fbrand .logo,.price-pill,.kick,.wchip,.tdate,.fcard .pprice,
-.pack .save,.ftab.on i,.mappin,.hero-sticker,.stat,.seal,.hero-photo,
-.mini-bear svg,.lab-photo .bearb,.botfab::after,.cband::before,.cband::after{
-  animation:none !important
-}
-.btn-fresa.pulse{animation:none !important}
-
-/* 3 · Fuera los brillos que recorren superficies ----------------------- */
-.grad-txt,.stat b,.stockline .bar i,.ntable th::after,.meter i::after,
-footer::before,.tline::before,.lab-photo img,.hero-photo::after{
-  animation:none !important
-}
-.hero-photo::after{display:none !important}
-.tline::before{opacity:.9}
-.stockline .bar i{background-position:0 0}
-.ntable th::after,.meter i::after{opacity:0 !important}
-
-/* 4 · Fondo limpio: sin canvas de caramelos, aurora apenas perceptible -- */
-#bgfx{display:none !important}
-body::before{opacity:.45;animation-duration:36s}
-
-/* 5 · Marquee sobrio: banda sólida en vez de arcoíris degradado ---------- */
-.marquee{background:var(--plum);color:#fff;letter-spacing:.14em;font-size:.78rem}
-.dark .marquee{background:#0d1230}
-
-/* 6 · Superficies: menos degradado, más plano y legible ----------------- */
-.pack.feat::after{animation:none !important;opacity:.5 !important}
-.fcard .fph{background:var(--card)}
-.hero-chip{animation:none !important}
-
-/* 7 · Jerarquía de foco más discreta ----------------------------------- */
-.btn:focus-visible,.btn-fresa:focus-visible,.btn-wa:focus-visible,.botfab:focus-visible,
-.bchip:focus-visible,.qa button:focus-visible{outline-width:3px;outline-offset:3px}
-</style>
 </head>
 <body>
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -759,12 +72,16 @@ body::before{opacity:.45;animation-duration:36s}
   <symbol id="i-fruit" viewBox="0 0 24 24"><path d="M12 7c-4 0-6.5 3-6.5 7s3 7 6.5 7 6.5-3 6.5-7-2.5-7-6.5-7z"/><path d="M12 7c0-2 1-3.5 2.5-4"/><path d="M12 7c-2 .3-4.5 0-6-2 2.5-1.5 5-1 6 2z"/></symbol>
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 6.5V12l3.5 3"/></symbol>
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.2 1.8 20.8h20.4L12 3.2z"/><path d="M12 9.5v4.8"/><circle cx="12" cy="17.6" r=".6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M8 12.2l2.8 2.8L16.4 9"/></symbol>
+  <symbol id="i-no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M8.4 8.4l7.2 7.2M15.6 8.4l-7.2 7.2"/></symbol>
+  <symbol id="i-pack" viewBox="0 0 24 24"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></symbol>
 </svg>
 
 <!-- NAV -->
 <nav class="nav" id="nav" aria-label="Principal">
   <a class="brand" href="#/" data-route="inicio">
-    <span class="logo"><img src="https://images.pexels.com/photos/12576322/pexels-photo-12576322.jpeg?auto=compress&cs=tinysrgb&w=160&h=160&fit=crop" alt="" width="44" height="44" decoding="async" onerror="this.remove()"><svg aria-hidden="true"><use href="#bear"/></svg></span>
+    <span class="logo"><svg aria-hidden="true"><use href="#bear"/></svg></span>
     <span><b>GOMI LIGHT</b><small>Pachacutec · I.E. 5130</small></span>
   </a>
   <ul class="nav-links" id="navLinks">
@@ -780,10 +97,10 @@ body::before{opacity:.45;animation-duration:36s}
     <button class="icobtn" id="motionBtn" type="button" aria-label="Activar o pausar animaciones" aria-pressed="true" title="Animaciones on/off"><svg aria-hidden="true"><use href="#i-spark"/></svg></button>
     <button class="icobtn" id="themeBtn" type="button" aria-label="Cambiar tema" title="Tema claro/oscuro"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
     <button class="icobtn" id="cartBtn" type="button" aria-label="Ver carrito" title="Carrito"><svg aria-hidden="true"><use href="#i-cart"/></svg><span id="cartCount"></span></button>
-    <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false"><i></i><i></i><i></i></button>
+    <button class="burger" id="burger" type="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="menu-principal"><i></i><i></i><i></i></button>
   </div>
 </nav>
-<div class="mnav" id="mnav">
+<div class="mnav" id="menu-principal" aria-hidden="true">
   <a href="#/" data-route="inicio">Inicio</a>
   <a href="#/sabores" data-route="sabores">Sabores</a>
   <a href="#/nutricion" data-route="nutricion">Nutrición</a>
@@ -818,21 +135,21 @@ body::before{opacity:.45;animation-duration:36s}
         <figure class="hero-photo" style="margin:0">
           <svg class="hframe" viewBox="0 0 100 112" preserveAspectRatio="none" aria-hidden="true">
             <defs><linearGradient id="hgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff4d88"/><stop offset=".5" stop-color="#ffb020"/><stop offset="1" stop-color="#7c5cff"/></linearGradient></defs>
-            <rect x="3" y="3" width="94" height="106" rx="8.5" pathLength="100" fill="none" stroke="url(#hgrad)" stroke-width="1.6" stroke-dasharray="5.5 4.5" stroke-linecap="round"/>
+            <rect x="3" y="3" width="94" height="106" rx="7" pathLength="100" fill="none" stroke="url(#hgrad)" stroke-width="1.6" stroke-dasharray="5.5 4.5" stroke-linecap="round"/>
           </svg>
-          <img src="https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=700&q=72&auto=format&fit=crop" alt="Gomitas de colores con textura gomosa real" width="700" height="770" fetchpriority="high" decoding="async" onerror="this.closest('.hero-photo').style.display='none'">
+          <img src="imagenes/hero-gomitas.jpg" alt="Representación ilustrativa de gomitas frutales con textura traslúcida" width="700" height="770" fetchpriority="high" decoding="async" onerror="this.closest('.hero-photo').style.display='none'">
         </figure>
-        <span class="hero-chip c1"><img src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=200&q=70&auto=format&fit=crop" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></span>
-        <span class="hero-chip c2"><img src="https://images.unsplash.com/photo-1553279768-865429fa0078?w=200&q=70&auto=format&fit=crop" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></span>
-        <span class="hero-chip c3"><img src="https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=200&q=70&auto=format&fit=crop" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></span>
-        <span class="mini-bear b1"><img src="https://images.pexels.com/photos/5469042/pexels-photo-5469042.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop" alt="" onerror="this.remove()"><svg style="--g:#ffd166;--gd:#7a5a00" aria-hidden="true"><use href="#bear"/></svg></span>
-        <span class="mini-bear b2"><img src="https://images.pexels.com/photos/33579702/pexels-photo-33579702.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop" alt="" onerror="this.remove()"><svg style="--g:#ff6b9e;--gd:#7a1233" aria-hidden="true"><use href="#bear"/></svg></span>
+        <span class="hero-chip c1"><img src="imagenes/fresa-andina.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></span>
+        <span class="hero-chip c2"><img src="imagenes/mango-jengibre.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></span>
+        <span class="hero-chip c3"><img src="imagenes/arandano-nocturno.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></span>
+        <span class="mini-bear b1"><svg style="--g:#ffd166;--gd:#7a5a00" aria-hidden="true"><use href="#bear"/></svg></span>
+        <span class="mini-bear b2"><svg style="--g:#ff6b9e;--gd:#7a1233" aria-hidden="true"><use href="#bear"/></svg></span>
         <span class="hero-sticker">Lote nuevo 2026-B</span>
       </div>
     </div>
   </header>
 
-  <div class="marquee" aria-hidden="true"><div class="mtrack"><span>GOMI LIGHT · Sin azúcar añadida · Fruta real · Pectina natural · Hecho en Pachacutec · I.E. 5130 · Vegano · Sin gluten ·&nbsp;</span><span>GOMI LIGHT · Sin azúcar añadida · Fruta real · Pectina natural · Hecho en Pachacutec · I.E. 5130 · Vegano · Sin gluten ·&nbsp;</span></div></div>
+  <div class="marquee" aria-hidden="true"><div class="mtrack"><span>GOMI LIGHT · Sin azúcar añadida · Fruta real · Pectina natural · Hecho en Pachacutec · I.E. 5130 · 3 de 4 sabores 100% veganos · Sin gluten ·&nbsp;</span><span>GOMI LIGHT · Sin azúcar añadida · Fruta real · Pectina natural · Hecho en Pachacutec · I.E. 5130 · 3 de 4 sabores 100% veganos · Sin gluten ·&nbsp;</span></div></div>
 
   <section class="sec">
     <div class="wrap">
@@ -844,41 +161,46 @@ body::before{opacity:.45;animation-duration:36s}
       <div class="g4">
         <article class="card fcard rv" style="--fc:#ff4d88">
           <div class="fph"><span class="badge">Vitamina C</span>
-            <img src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=600&q=70&auto=format&fit=crop" alt="Fresas frescas del sabor Fresa Andina" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=420&q=70&auto=format&fit=crop 420w,https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=900&q=70&auto=format&fit=crop 900w" sizes="(max-width:700px) 90vw,420px" onerror="this.closest('.fph').classList.add('noph')">
-            <span class="bearb"><img src="https://images.pexels.com/photos/31665692/pexels-photo-31665692.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="" onerror="this.remove()"><svg style="--g:#ff4d88;--gd:#7a1233" aria-hidden="true"><use href="#bear"/></svg></span>
+            <img src="imagenes/fresa-andina.jpg" alt="Fresas frescas del sabor Fresa Andina" loading="lazy" decoding="async" onerror="this.closest('.fph').classList.add('noph')">
+            <span class="bearb"><svg style="--g:#ff4d88;--gd:#7a1233" aria-hidden="true"><use href="#bear"/></svg></span>
           </div>
           <div class="fbody"><h3>Fresa Andina</h3>
+          <span class="vlabel veg"><svg aria-hidden="true"><use href="#i-leaf"/></svg>100% Vegano (Pectina Cítrica)</span>
           <p class="fdesc">Fresa real con toque de pitahaya. La favorita del recreo.</p>
           <div class="frow"><span class="price">S/12</span><a class="btn btn-ghost btn-sm" href="#/sabores" data-route="sabores">Ver sabor <svg class="stroke" aria-hidden="true" style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><use href="#i-arrow"/></svg></a></div></div>
         </article>
         <article class="card fcard rv" style="--fc:#ffb020">
           <div class="fph"><span class="badge" style="background:#ff8a3d;color:#fff">Energía</span>
-            <img src="https://images.unsplash.com/photo-1553279768-865429fa0078?w=600&q=70&auto=format&fit=crop" alt="Mango maduro del sabor Mango Jengibre" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1553279768-865429fa0078?w=420&q=70&auto=format&fit=crop 420w,https://images.unsplash.com/photo-1553279768-865429fa0078?w=900&q=70&auto=format&fit=crop 900w" sizes="(max-width:700px) 90vw,420px" onerror="this.closest('.fph').classList.add('noph')">
-            <span class="bearb"><img src="https://images.pexels.com/photos/33579702/pexels-photo-33579702.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="" onerror="this.remove()"><svg style="--g:#ffb020;--gd:#7a4a00" aria-hidden="true"><use href="#bear"/></svg></span>
+            <img src="imagenes/mango-jengibre.jpg" alt="Mango maduro del sabor Mango Jengibre" loading="lazy" decoding="async" onerror="this.closest('.fph').classList.add('noph')">
+            <span class="bearb"><svg style="--g:#ffb020;--gd:#7a4a00" aria-hidden="true"><use href="#bear"/></svg></span>
           </div>
           <div class="fbody"><h3>Mango Jengibre</h3>
+          <span class="vlabel veg"><svg aria-hidden="true"><use href="#i-leaf"/></svg>100% Vegano (Pectina Cítrica)</span>
           <p class="fdesc">Tropical y digestivo, con jengibre fresco rallado.</p>
           <div class="frow"><span class="price">S/12</span><a class="btn btn-ghost btn-sm" href="#/sabores" data-route="sabores">Ver sabor <svg aria-hidden="true" style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><use href="#i-arrow"/></svg></a></div></div>
         </article>
         <article class="card fcard rv" style="--fc:#7c5cff">
           <div class="fph"><span class="badge" style="background:#7c5cff;color:#fff">Colágeno</span>
-            <img src="https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=600&q=70&auto=format&fit=crop" alt="Arándanos del sabor Arándano Nocturno" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=420&q=70&auto=format&fit=crop 420w,https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=900&q=70&auto=format&fit=crop 900w" sizes="(max-width:700px) 90vw,420px" onerror="this.closest('.fph').classList.add('noph')">
-            <span class="bearb"><img src="https://images.pexels.com/photos/5469042/pexels-photo-5469042.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="" onerror="this.remove()"><svg style="--g:#7c5cff;--gd:#2a1466" aria-hidden="true"><use href="#bear"/></svg></span>
+            <img src="imagenes/arandano-nocturno.jpg" alt="Arándanos del sabor Arándano Nocturno" loading="lazy" decoding="async" onerror="this.closest('.fph').classList.add('noph')">
+            <span class="bearb"><svg style="--g:#7c5cff;--gd:#2a1466" aria-hidden="true"><use href="#bear"/></svg></span>
           </div>
           <div class="fbody"><h3>Arándano Nocturno</h3>
+          <span class="vlabel noveg"><svg aria-hidden="true"><use href="#i-flame"/></svg>Con Colágeno / No Vegano</span>
           <p class="fdesc">Antioxidantes + colágeno. Ideal después del deporte.</p>
           <div class="frow"><span class="price">S/12</span><a class="btn btn-ghost btn-sm" href="#/sabores" data-route="sabores">Ver sabor <svg aria-hidden="true" style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><use href="#i-arrow"/></svg></a></div></div>
         </article>
         <article class="card fcard rv" style="--fc:#38d9a9">
           <div class="fph"><span class="badge" style="background:#38d9a9;color:#083326">Frescura</span>
-            <img src="https://images.unsplash.com/photo-1590502593747-42a996133562?w=600&q=70&auto=format&fit=crop" alt="Limones con menta del sabor Limón Menta" loading="lazy" decoding="async" srcset="https://images.unsplash.com/photo-1590502593747-42a996133562?w=420&q=70&auto=format&fit=crop 420w,https://images.unsplash.com/photo-1590502593747-42a996133562?w=900&q=70&auto=format&fit=crop 900w" sizes="(max-width:700px) 90vw,420px" onerror="this.closest('.fph').classList.add('noph')">
-            <span class="bearb"><img src="https://images.pexels.com/photos/12576322/pexels-photo-12576322.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="" onerror="this.remove()"><svg style="--g:#38d9a9;--gd:#0a3f30" aria-hidden="true"><use href="#bear"/></svg></span>
+            <img src="imagenes/limon-menta.jpg" alt="Limones con menta del sabor Limón Menta" loading="lazy" decoding="async" onerror="this.closest('.fph').classList.add('noph')">
+            <span class="bearb"><svg style="--g:#38d9a9;--gd:#0a3f30" aria-hidden="true"><use href="#bear"/></svg></span>
           </div>
           <div class="fbody"><h3>Limón Menta</h3>
+          <span class="vlabel veg"><svg aria-hidden="true"><use href="#i-leaf"/></svg>100% Vegano (Pectina Cítrica)</span>
           <p class="fdesc">Cítrico helado con menta. Refresca sin cafeína.</p>
           <div class="frow"><span class="price">S/12</span><a class="btn btn-ghost btn-sm" href="#/sabores" data-route="sabores">Ver sabor <svg aria-hidden="true" style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><use href="#i-arrow"/></svg></a></div></div>
         </article>
       </div>
+      <p class="vnote rv"><b>Importante:</b> solo 3 de los 4 sabores son veganos. <b>Fresa Andina, Mango Jengibre y Limón Menta</b> son 100% veganos (pectina cítrica). <b>Arándano Nocturno</b> contiene colágeno hidrolizado y <b>no es vegano</b>. Cada tarjeta indica su estado. También puedes armar tu pouch surtido indicando cuántos gomitas de cada sabor quieres.</p>
     </div>
   </section>
 
@@ -892,7 +214,7 @@ body::before{opacity:.45;animation-duration:36s}
       <div class="g4">
         <div class="card rv"><div class="ic"><svg aria-hidden="true"><use href="#i-drop"/></svg></div><h3>0% azúcar añadida</h3><p>Dulzor de stevia y eritritol, sin picos de glucosa ni caries.</p></div>
         <div class="card rv"><div class="ic"><svg aria-hidden="true"><use href="#i-fruit"/></svg></div><h3>42% fruta real</h3><p>Zumo y pulpa deshidratada de fresa, mango, arándano y limón.</p></div>
-        <div class="card rv"><div class="ic"><svg aria-hidden="true"><use href="#i-leaf"/></svg></div><h3>Pectina natural</h3><p>Textura gomosa sin gelatina animal. Apta para veganos.</p></div>
+        <div class="card rv"><div class="ic"><svg aria-hidden="true"><use href="#i-leaf"/></svg></div><h3>Pectina natural</h3><p>Textura gomosa sin gelatina animal. Apta para veganos en 3 de los 4 sabores.</p></div>
         <div class="card rv"><div class="ic"><svg aria-hidden="true"><use href="#i-users"/></svg></div><h3>Compra con causa</h3><p>Cada pouch financia talleres productivos de la I.E. 5130.</p></div>
       </div>
       <div class="g4" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-top:22px">
@@ -909,19 +231,19 @@ body::before{opacity:.45;animation-duration:36s}
       <div class="sec-head rv">
         <span class="kick">De cerca</span>
         <h2>Míralo <span class="grad-txt">por ti mismo</span></h2>
-        <p class="sub">Fotos reales del lote piloto 2026.</p>
+        <p class="sub">Imágenes ilustrativas del producto, sus ingredientes y el entorno emprendedor.</p>
       </div>
       <div class="g3">
         <a class="photo rv" href="#/historia" data-route="historia" style="aspect-ratio:4/3">
-          <img src="https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=700&q=72&auto=format&fit=crop" alt="Gomitas de colores" loading="lazy" decoding="async" onerror="this.closest('.photo').classList.add('noimg');this.remove()">
+          <img src="imagenes/hero-gomitas.jpg" alt="Representación ilustrativa de gomitas frutales" loading="lazy" decoding="async" onerror="this.closest('.photo').classList.add('noimg');this.remove()">
           <span class="cap">Textura gomosa real</span>
         </a>
         <a class="photo rv" href="#/nutricion" data-route="nutricion" style="aspect-ratio:4/3">
-          <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=700&q=72&auto=format&fit=crop" alt="Frutas frescas variadas" loading="lazy" decoding="async" onerror="this.closest('.photo').classList.add('noimg');this.remove()">
+          <img src="imagenes/frutas-frescas.jpg" alt="Frutas frescas variadas" loading="lazy" decoding="async" onerror="this.closest('.photo').classList.add('noimg');this.remove()">
           <span class="cap">Fruta real en cada pouch</span>
         </a>
         <a class="photo rv" href="#/historia" data-route="historia" style="aspect-ratio:4/3">
-          <img src="https://images.pexels.com/photos/36573253/pexels-photo-36573253.jpeg?auto=compress&cs=tinysrgb&w=700&h=525&fit=crop" alt="Casitas de colores en una loma de Lima, Peru" loading="lazy" decoding="async" onerror="this.closest('.photo').classList.add('noimg');this.remove()">
+          
           <span class="cap">Pachacutec · Ventanilla, Callao</span>
         </a>
       </div>
@@ -987,8 +309,8 @@ body::before{opacity:.45;animation-duration:36s}
             <circle cx="50" cy="50" r="47.5" pathLength="100" fill="none" stroke="url(#lgrad)" stroke-width="1.6" stroke-dasharray="5.5 4.5" stroke-linecap="round"/>
           </svg>
           <div class="lab-photo">
-            <img id="labImg" src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=500&q=72&auto=format&fit=crop" alt="Fresa Andina" decoding="async" onerror="this.closest('.lab-photo').style.background='var(--grad-sun)'">
-            <span class="bearb"><img src="https://images.pexels.com/photos/33579702/pexels-photo-33579702.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop" alt="" onerror="this.remove()"><svg id="labBear" style="--g:#ff4d88;--gd:#7a1233" aria-hidden="true"><use href="#bear"/></svg></span>
+            <img id="labImg" src="imagenes/fresa-andina.jpg" alt="Fresa Andina" decoding="async" onerror="this.closest('.lab-photo').style.background='var(--grad-sun)'">
+            <span class="bearb"><svg id="labBear" style="--g:#ff4d88;--gd:#7a1233" aria-hidden="true"><use href="#bear"/></svg></span>
           </div>
         </div>
         <div>
@@ -1015,37 +337,41 @@ body::before{opacity:.45;animation-duration:36s}
       <div class="g4">
         <article class="card fcard rv" style="--fc:#ff4d88">
           <div class="fph"><span class="badge">Vit C</span>
-            <img src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=600&q=70&auto=format&fit=crop" alt="Fresas frescas" loading="lazy" decoding="async" onerror="this.closest('.fph').classList.add('noph')">
-            <span class="bearb"><img src="https://images.pexels.com/photos/31665692/pexels-photo-31665692.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="" onerror="this.remove()"><svg style="--g:#ff4d88;--gd:#7a1233" aria-hidden="true"><use href="#bear"/></svg></span>
+            <img src="imagenes/fresa-andina.jpg" alt="Fresas frescas" loading="lazy" decoding="async" onerror="this.closest('.fph').classList.add('noph')">
+            <span class="bearb"><svg style="--g:#ff4d88;--gd:#7a1233" aria-hidden="true"><use href="#bear"/></svg></span>
           </div>
           <div class="fbody"><h3>Fresa Andina</h3>
+          <span class="vlabel veg"><svg aria-hidden="true"><use href="#i-leaf"/></svg>100% Vegano (Pectina Cítrica)</span>
           <p class="fdesc">Fresa real + pitahaya. La favorita del recreo: dulce, ácida y con vitamina C.</p>
           <div class="frow"><span class="price">S/12</span><button class="btn btn-fresa btn-sm" type="button" data-add="0"><svg class="stroke" aria-hidden="true"><use href="#i-plus"/></svg>Agregar</button></div></div>
         </article>
         <article class="card fcard rv" style="--fc:#ffb020">
           <div class="fph"><span class="badge" style="background:#ff8a3d;color:#fff">Energía</span>
-            <img src="https://images.unsplash.com/photo-1553279768-865429fa0078?w=600&q=70&auto=format&fit=crop" alt="Mango maduro" loading="lazy" decoding="async" onerror="this.closest('.fph').classList.add('noph')">
-            <span class="bearb"><img src="https://images.pexels.com/photos/33579702/pexels-photo-33579702.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="" onerror="this.remove()"><svg style="--g:#ffb020;--gd:#7a4a00" aria-hidden="true"><use href="#bear"/></svg></span>
+            <img src="imagenes/mango-jengibre.jpg" alt="Mango maduro" loading="lazy" decoding="async" onerror="this.closest('.fph').classList.add('noph')">
+            <span class="bearb"><svg style="--g:#ffb020;--gd:#7a4a00" aria-hidden="true"><use href="#bear"/></svg></span>
           </div>
           <div class="fbody"><h3>Mango Jengibre</h3>
+          <span class="vlabel veg"><svg aria-hidden="true"><use href="#i-leaf"/></svg>100% Vegano (Pectina Cítrica)</span>
           <p class="fdesc">Mango maduro con jengibre fresco. Energía digestiva para la tarde.</p>
           <div class="frow"><span class="price">S/12</span><button class="btn btn-fresa btn-sm" type="button" data-add="1"><svg class="stroke" aria-hidden="true"><use href="#i-plus"/></svg>Agregar</button></div></div>
         </article>
         <article class="card fcard rv" style="--fc:#7c5cff">
           <div class="fph"><span class="badge" style="background:#7c5cff;color:#fff">Colágeno</span>
-            <img src="https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=600&q=70&auto=format&fit=crop" alt="Arándanos" loading="lazy" decoding="async" onerror="this.closest('.fph').classList.add('noph')">
-            <span class="bearb"><img src="https://images.pexels.com/photos/5469042/pexels-photo-5469042.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="" onerror="this.remove()"><svg style="--g:#7c5cff;--gd:#2a1466" aria-hidden="true"><use href="#bear"/></svg></span>
+            <img src="imagenes/arandano-nocturno.jpg" alt="Arándanos" loading="lazy" decoding="async" onerror="this.closest('.fph').classList.add('noph')">
+            <span class="bearb"><svg style="--g:#7c5cff;--gd:#2a1466" aria-hidden="true"><use href="#bear"/></svg></span>
           </div>
           <div class="fbody"><h3>Arándano Nocturno</h3>
+          <span class="vlabel noveg"><svg aria-hidden="true"><use href="#i-flame"/></svg>Con Colágeno / No Vegano</span>
           <p class="fdesc">Antioxidantes + colágeno hidrolizado. Ideal después del deporte.</p>
           <div class="frow"><span class="price">S/12</span><button class="btn btn-fresa btn-sm" type="button" data-add="2"><svg class="stroke" aria-hidden="true"><use href="#i-plus"/></svg>Agregar</button></div></div>
         </article>
         <article class="card fcard rv" style="--fc:#38d9a9">
           <div class="fph"><span class="badge" style="background:#38d9a9;color:#083326">Frescura</span>
-            <img src="https://images.unsplash.com/photo-1590502593747-42a996133562?w=600&q=70&auto=format&fit=crop" alt="Limones con menta" loading="lazy" decoding="async" onerror="this.closest('.fph').classList.add('noph')">
-            <span class="bearb"><img src="https://images.pexels.com/photos/12576322/pexels-photo-12576322.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="" onerror="this.remove()"><svg style="--g:#38d9a9;--gd:#0a3f30" aria-hidden="true"><use href="#bear"/></svg></span>
+            <img src="imagenes/limon-menta.jpg" alt="Limones con menta" loading="lazy" decoding="async" onerror="this.closest('.fph').classList.add('noph')">
+            <span class="bearb"><svg style="--g:#38d9a9;--gd:#0a3f30" aria-hidden="true"><use href="#bear"/></svg></span>
           </div>
           <div class="fbody"><h3>Limón Menta</h3>
+          <span class="vlabel veg"><svg aria-hidden="true"><use href="#i-leaf"/></svg>100% Vegano (Pectina Cítrica)</span>
           <p class="fdesc">Cítrico helado con menta y electrolitos. Refresca sin cafeína.</p>
           <div class="frow"><span class="price">S/12</span><button class="btn btn-fresa btn-sm" type="button" data-add="3"><svg class="stroke" aria-hidden="true"><use href="#i-plus"/></svg>Agregar</button></div></div>
         </article>
@@ -1063,14 +389,6 @@ body::before{opacity:.45;animation-duration:36s}
   </section>
   <div class="marquee" aria-hidden="true" style="background:var(--grad-pp)"><div class="mtrack"><span>4 sabores · 30 gomitas por pouch · Fruta real · S/12 · Pouch surtido disponible ·&nbsp;</span><span>4 sabores · 30 gomitas por pouch · Fruta real · S/12 · Pouch surtido disponible ·&nbsp;</span></div></div>
 </section>
-<style>
-#cartCount{position:absolute;top:-5px;right:-5px;background:var(--grad-hot);color:#fff;font-size:.62rem;font-weight:900;min-width:17px;height:17px;border-radius:9px;display:none;place-items:center;padding:0 4px;border:2px solid var(--bg)}
-#cartCount.pulse{animation:badgePop .45s var(--spring)}
-@keyframes badgePop{0%{transform:scale(1)}45%{transform:scale(1.55) rotate(-8deg)}100%{transform:scale(1)}}
-.fph.noph{background:var(--grad-sun)}
-.cline .cdot{display:grid;place-items:center}
-.cline .cdot svg{width:26px;height:26px}
-</style>
 
 <!-- ============ NUTRICIÓN ============ -->
 <section class="page" data-page="nutricion" id="pg-nutricion">
@@ -1093,6 +411,22 @@ body::before{opacity:.45;animation-duration:36s}
             <tr><td>Colorantes artificiales</td><td class="num" style="color:var(--rosa-osc)">0</td><td class="num vs">4+</td></tr>
           </table>
           <p style="color:var(--tenue);font-size:.8rem;font-weight:600;margin-top:10px">* Valores referenciales del lote piloto. VD: valor diario. Si tienes una condición médica, consulta a tu profesional de salud.</p>
+        </div>
+
+        <!-- ===== ADVERTENCIA DE ALÉRGENOS (requisito 2.c) ===== -->
+        <div class="allergen rv" role="note" aria-labelledby="alergTit">
+          <h3 id="alergTit"><svg aria-hidden="true"><use href="#i-alert"/></svg>Advertencia de alérgenos</h3>
+          <p>Lee esto antes de comprar, sobre todo si tienes alergia o intolerancia alimentaria. Cada pouch se elabora en el taller de emprendimiento de la <b>I.E. N° 5130 de Ciudadela Pachacútec, Ventanilla — Callao</b>.</p>
+          <div class="alist">
+            <div class="aitem ok"><svg aria-hidden="true"><use href="#i-ok"/></svg><span><b>Fresa · Mango · Limón Menta:</b> sin gluten, sin soja, sin frutos secos añadidos y <b>100% veganos</b> (pectina cítrica).</span></div>
+            <div class="aitem no"><svg aria-hidden="true"><use href="#i-no"/></svg><span><b>Arándano Nocturno:</b> contiene <b>colágeno hidrolizado de origen bovino</b>. No es vegano. No apto para personas con alergia a proteínas bovinas.</span></div>
+            <div class="aitem"><svg aria-hidden="true"><use href="#i-alert"/></svg><span><b>Contiene:</b> pectina cítrica, colágeno hidrolizado (solo Arándano), jengibre, menta, eritritol y estevia.</span></div>
+            <div class="aitem"><svg aria-hidden="true"><use href="#i-alert"/></svg><span><b>Puede contener trazas</b> por espacio compartido: el taller procesa frutas, releños y productos con gluten.</span></div>
+          </div>
+          <div class="atrace">
+            <svg aria-hidden="true"><use href="#i-alert"/></svg>
+            <span><b>Contaminación cruzada (trazas):</b> por honestidad no podemos afirmar que el taller sea <b>libre de trazas</b>, porque en la misma cocina de la I.E. 5130 se elaboran otros productos. <b>Si tienes una alergia grave, escríbenos antes de comprar</b> al <a href="https://wa.me/51910147552" target="_blank" rel="noopener">WhatsApp 910 147 552</a> y te detallamos el lote y los equipos usados.</span>
+          </div>
         </div>
         <div>
           <div class="sealgrid rv">
@@ -1164,8 +498,8 @@ body::before{opacity:.45;animation-duration:36s}
           </div>
         </div>
         <figure class="photo rv" style="margin:0;aspect-ratio:4/3.4">
-          <img src="https://images.pexels.com/photos/37350761/pexels-photo-37350761.jpeg?auto=compress&cs=tinysrgb&w=800&h=680&fit=crop" alt="Casitas de colores en las lomas del Callao, hogar de Pachacutec" loading="lazy" decoding="async" onerror="this.closest('.photo').classList.add('noimg');this.remove()">
-          <figcaption>Las lomas de Pachacútec · Callao</figcaption>
+          <img src="imagenes/comunidad-emprendedora.jpg" alt="Ilustración referencial inspirada en el entorno comunitario del Callao" loading="lazy" decoding="async" onerror="this.closest('.photo').classList.add('noimg');this.remove()">
+          <figcaption>Ilustración inspirada en el entorno de Pachacútec · Callao</figcaption>
         </figure>
       </div>
     </div>
@@ -1255,8 +589,98 @@ body::before{opacity:.45;animation-duration:36s}
           <input type="range" id="calcRange" min="1" max="20" value="2" step="1" aria-label="Cantidad de pouches">
         </div>
         <div class="crow"><span>Total estimado</span><b id="calcTotal">S/24</b></div>
+        <div class="save-live" id="calcSave" role="status" aria-live="polite">
+          <span class="sl-txt"><svg aria-hidden="true"><use href="#i-spark"/></svg><span id="calcSaveTxt">Descuento Pack Familiar aplicado</span></span>
+          <span class="sl-amt"><s id="calcSaveOld">S/36</s><span id="calcSaveAmt">ahorras S/3</span></span>
+        </div>
         <p class="hint" id="calcHint">Con 3 pouches te llevas el precio <b>Familiar: S/33</b>.</p>
         <button class="btn btn-amar btn-block" type="button" id="calcAdd"><svg class="stroke" aria-hidden="true"><use href="#i-cart"/></svg>Agregar 2 pouches surtidos</button>
+      </div>
+
+      <!-- ===== CONSTRUCTOR DE POUCH SURTIDO (requisito 1.a) =====
+           Elige cuántos gomitas de cada sabor entran en tu pouch de 30.
+           Casillas para incluir el sabor + selector de cantidad.        -->
+      <div class="builder rv" id="builder">
+        <h3><svg aria-hidden="true"><use href="#i-pack"/></svg>Arma tu pouch surtido</h3>
+        <p>Elige <b>exactamente cuántas gomitas</b> de cada sabor quieres dentro de tu pouch de 30. Marca la casilla para incluir un sabor y ajusta la cantidad con los botones (o el desplegable).</p>
+
+        <div class="brow" data-bf="0" style="--bfc:#ff4d88">
+          <input class="bchk" type="checkbox" id="bchk0" aria-label="Incluir sabor Fresa Andina en el pouch">
+          <span class="bdot" aria-hidden="true"></span>
+          <span class="bname">Fresa Andina <span class="btag veg">100% Vegano (Pectina Cítrica)</span></span>
+          <span class="bstep">
+            <button type="button" data-bd="-1" data-bf="0" aria-label="Quitar una gomita de Fresa Andina"><svg aria-hidden="true"><use href="#i-minus"/></svg></button>
+            <output id="bq0" for="bchk0 bs0" aria-live="off">0</output>
+            <button type="button" data-bd="1" data-bf="0" aria-label="Agregar una gomita de Fresa Andina"><svg aria-hidden="true"><use href="#i-plus"/></svg></button>
+            <select id="bs0" data-bs="0" aria-label="Cantidad de gomitas de Fresa Andina">
+              <option value="0">0</option><option value="5">5</option><option value="10">10</option>
+              <option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option>
+            </select>
+          </span>
+        </div>
+
+        <div class="brow" data-bf="1" style="--bfc:#ffb020">
+          <input class="bchk" type="checkbox" id="bchk1" aria-label="Incluir sabor Mango Jengibre en el pouch">
+          <span class="bdot" aria-hidden="true"></span>
+          <span class="bname">Mango Jengibre <span class="btag veg">100% Vegano (Pectina Cítrica)</span></span>
+          <span class="bstep">
+            <button type="button" data-bd="-1" data-bf="1" aria-label="Quitar una gomita de Mango Jengibre"><svg aria-hidden="true"><use href="#i-minus"/></svg></button>
+            <output id="bq1" for="bchk1 bs1" aria-live="off">0</output>
+            <button type="button" data-bd="1" data-bf="1" aria-label="Agregar una gomita de Mango Jengibre"><svg aria-hidden="true"><use href="#i-plus"/></svg></button>
+            <select id="bs1" data-bs="1" aria-label="Cantidad de gomitas de Mango Jengibre">
+              <option value="0">0</option><option value="5">5</option><option value="10">10</option>
+              <option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option>
+            </select>
+          </span>
+        </div>
+
+        <div class="brow" data-bf="2" style="--bfc:#7c5cff">
+          <input class="bchk" type="checkbox" id="bchk2" aria-label="Incluir sabor Arándano Nocturno en el pouch">
+          <span class="bdot" aria-hidden="true"></span>
+          <span class="bname">Arándano Nocturno <span class="btag noveg">Con Colágeno / No Vegano</span></span>
+          <span class="bstep">
+            <button type="button" data-bd="-1" data-bf="2" aria-label="Quitar una gomita de Arándano Nocturno"><svg aria-hidden="true"><use href="#i-minus"/></svg></button>
+            <output id="bq2" for="bchk2 bs2" aria-live="off">0</output>
+            <button type="button" data-bd="1" data-bf="2" aria-label="Agregar una gomita de Arándano Nocturno"><svg aria-hidden="true"><use href="#i-plus"/></svg></button>
+            <select id="bs2" data-bs="2" aria-label="Cantidad de gomitas de Arándano Nocturno">
+              <option value="0">0</option><option value="5">5</option><option value="10">10</option>
+              <option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option>
+            </select>
+          </span>
+        </div>
+
+        <div class="brow" data-bf="3" style="--bfc:#38d9a9">
+          <input class="bchk" type="checkbox" id="bchk3" aria-label="Incluir sabor Limón Menta en el pouch">
+          <span class="bdot" aria-hidden="true"></span>
+          <span class="bname">Limón Menta <span class="btag veg">100% Vegano (Pectina Cítrica)</span></span>
+          <span class="bstep">
+            <button type="button" data-bd="-1" data-bf="3" aria-label="Quitar una gomita de Limón Menta"><svg aria-hidden="true"><use href="#i-minus"/></svg></button>
+            <output id="bq3" for="bchk3 bs3" aria-live="off">0</output>
+            <button type="button" data-bd="1" data-bf="3" aria-label="Agregar una gomita de Limón Menta"><svg aria-hidden="true"><use href="#i-plus"/></svg></button>
+            <select id="bs3" data-bs="3" aria-label="Cantidad de gomitas de Limón Menta">
+              <option value="0">0</option><option value="5">5</option><option value="10">10</option>
+              <option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option>
+            </select>
+          </span>
+        </div>
+
+        <div class="bmeter" aria-hidden="true"><i id="bMeter"></i></div>
+        <div class="bwarn" id="bWarn" role="status" aria-live="polite">
+          <svg aria-hidden="true"><use href="#i-alert"/></svg><span id="bWarnTxt">El pouch tiene 30 gomitas.</span>
+        </div>
+
+        <div class="btotal">
+          <span class="bt-l">
+            <b>Pouch surtido personalizado</b>
+            <small id="bSummary">0 de 30 gomitas · S/12</small>
+          </span>
+          <span class="bt-r" id="bPrice">S/12</span>
+        </div>
+
+        <button class="btn btn-fresa btn-block" type="button" id="bAdd" style="margin-top:14px" disabled>
+          <svg class="stroke" aria-hidden="true"><use href="#i-cart"/></svg>Agregar pouch surtido al carrito
+        </button>
+        <p class="hint" style="margin-top:10px;text-align:center">¿Prefieres 1 solo sabor? <a href="#/sabores" data-route="sabores">Elígelo en Sabores</a> y agrégalo desde su ficha.</p>
       </div>
 
       <div class="tipgrid" style="margin-top:26px">
@@ -1297,7 +721,7 @@ body::before{opacity:.45;animation-duration:36s}
   <section class="sec">
     <div class="wrap">
       <div class="cband rv">
-        <div class="cin">
+        <div class="cin solo">
           <div>
             <span class="kick" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:#fff">Hablemos</span>
             <h2>Escríbenos, respondemos rapidito</h2>
@@ -1309,23 +733,147 @@ body::before{opacity:.45;animation-duration:36s}
             </div>
             <a class="btn btn-wa btn-lg" style="margin-top:18px" href="https://wa.me/51910147552?text=Hola%20GOMI%20LIGHT%2C%20tengo%20una%20consulta." target="_blank" rel="noopener"><svg aria-hidden="true" style="fill:currentColor"><use href="#wa"/></svg>Chatear por WhatsApp</a>
           </div>
-          <form id="cForm" novalidate>
-            <div class="field"><label for="fName">Tu nombre</label><input id="fName" name="nombre" type="text" placeholder="Ej. Rosa Mendoza" autocomplete="name"></div>
-            <div class="field"><label for="fWa">Tu WhatsApp</label><input id="fWa" name="whatsapp" type="tel" placeholder="910 147 552" autocomplete="tel" inputmode="tel"></div>
-            <div class="field"><label for="fTopic">Motivo</label>
-              <select id="fTopic" name="motivo">
-                <option>Hacer un pedido</option>
-                <option>Ser punto de venta</option>
-                <option>Consulta general</option>
-              </select>
-            </div>
-            <div class="field"><label for="fMsg">Mensaje</label><textarea id="fMsg" name="mensaje" placeholder="Cuéntanos qué necesitas…"></textarea></div>
-            <span class="ferr" id="fErr" role="alert"></span>
-            <button class="btn btn-amar btn-block" type="submit">Enviar mensaje<svg class="stroke" aria-hidden="true"><use href="#i-send"/></svg></button>
-            <div class="fok" id="fOk">Listo. Te contactaremos por WhatsApp muy pronto.</div>
-          </form>
         </div>
       </div>
+      <!-- ===== FORMULARIOS AUTOMATIZADOS (requisito 3) =====
+           A) Pedido  B) B2B para bodegas. Ambos abren WhatsApp con el
+           mensaje ya formateado y codificado.                        -->
+      <div class="g2" style="margin-top:26px;align-items:start">
+
+        <!-- A) FORMULARIO DE PEDIDO -->
+        <form class="fwrap rv" id="orderForm" novalidate>
+          <h3><svg aria-hidden="true"><use href="#i-cart"/></svg>Formulario de pedido</h3>
+          <p>Completa y te enviamos el pedido listo a WhatsApp. Sin registros ni contraseñas.</p>
+
+          <div class="fgrid2">
+            <div class="field">
+              <label for="oName">Nombre <span class="req" aria-hidden="true">*</span></label>
+              <input id="oName" name="nombre" type="text" placeholder="Ej. Rosa Mendoza" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="oWa">WhatsApp <span class="req" aria-hidden="true">*</span></label>
+              <input id="oWa" name="whatsapp" type="tel" placeholder="910 147 552" autocomplete="tel" inputmode="tel" required>
+            </div>
+          </div>
+
+          <div class="field" style="margin-top:14px">
+            <label for="oPack">Pack elegido <span class="req" aria-hidden="true">*</span></label>
+            <select id="oPack" name="pack" required>
+              <option value="">Elige un pack…</option>
+              <option value="Pack Recreo · 1 pouch (30 gomitas)">Pack Recreo · 1 pouch (30 gomitas) — S/12</option>
+              <option value="Pack Familiar · 3 pouches (90 gomitas)">Pack Familiar · 3 pouches (90 gomitas) — S/33 (ahorras S/3)</option>
+              <option value="Pack Escolar · 5 pouches (150 gomitas)">Pack Escolar · 5 pouches (150 gomitas) — S/50 (ahorras S/10)</option>
+              <option value="Pouch surtido personalizado">Pouch surtido personalizado (armado por ti) — S/12</option>
+            </select>
+          </div>
+
+          <div class="field" style="margin-top:14px">
+            <label for="oFlavor">Distribución de sabores <span class="req" aria-hidden="true">*</span></label>
+            <select id="oFlavor" name="sabores" required>
+              <option value="">Elige la distribución…</option>
+              <option value="1 sabor (el que indiques)">1 solo sabor (el que indiques)</option>
+              <option value="2 sabores surtidos">2 sabores surtidos</option>
+              <option value="3 sabores surtidos">3 sabores surtidos</option>
+              <option value="4 sabores surtidos (10/10/5/5)">4 sabores surtidos (10/10/5/5)</option>
+              <option value="Surtido personalizable (indico cantidades)">Surtido personalizable (indico cantidades)</option>
+              <option value="Solo veganos (Fresa, Mango y Limón Menta)">Solo veganos: Fresa, Mango y Limón Menta</option>
+            </select>
+          </div>
+
+          <div class="field" style="margin-top:14px">
+            <label id="oShipLbl">Distrito de entrega <span class="req" aria-hidden="true">*</span></label>
+            <div class="ship" role="radiogroup" aria-labelledby="oShipLbl">
+              <label class="ship-opt">
+                <input type="radio" name="distrito" value="Pachacútec" data-ship="0" data-zona="Envío gratis" required>
+                <span class="so-t"><b>Pachacútec</b><small>Entrega en el mismo día, punto de encuentro en la I.E. 5130</small></span>
+                <span class="so-p">Gratis</span>
+              </label>
+              <label class="ship-opt">
+                <input type="radio" name="distrito" value="Mi Perú" data-ship="0" data-zona="Envío gratis">
+                <span class="so-t"><b>Mi Perú</b><small>Entrega en el mismo día</small></span>
+                <span class="so-p">Gratis</span>
+              </label>
+              <label class="ship-opt">
+                <input type="radio" name="distrito" value="Ventanilla Centro" data-ship="0" data-zona="Envío gratis">
+                <span class="so-t"><b>Ventanilla Centro</b><small>Punto de encuentro en el centro de Ventanilla</small></span>
+                <span class="so-p">Gratis</span>
+              </label>
+              <label class="ship-opt">
+                <input type="radio" name="distrito" value="Lima Metropolitana" data-ship="8" data-zona="Envío 24-48 h">
+                <span class="so-t"><b>Lima Metropolitana</b><small>Delivery por Shalom o similar, 24-48 h</small></span>
+                <span class="so-p paid">S/8</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field" style="margin-top:14px">
+            <label for="oNote">Nota para el despacho (opcional)</label>
+            <textarea id="oNote" name="nota" rows="2" placeholder="Ej. entregar después de las 4 pm, en la reja de la I.E."></textarea>
+          </div>
+
+          <div class="oresumen" id="oResumen" style="margin-top:14px"></div>
+
+          <div class="fsum">
+            <span>Total estimado del pedido</span>
+            <b id="oTotal">S/0</b>
+            <span class="fs-note" id="oShipNote">Elige tu distrito para calcular el envío.</span>
+          </div>
+
+          <span class="ferr" id="oErr" role="alert" style="color:var(--rojo)"></span>
+          <button class="btn btn-fresa btn-block" type="submit" style="margin-top:12px">
+            <svg class="stroke" aria-hidden="true"><use href="#i-send"/></svg>Enviar pedido por WhatsApp
+          </button>
+          <div class="fok" id="oOk" style="margin-top:12px">Pedido enviado. Te respondemos en menos de 1 hora.</div>
+        </form>
+
+        <!-- B) FORMULARIO B2B PARA BODEGAS -->
+        <form class="fwrap rv" id="b2bForm" novalidate>
+          <h3><svg aria-hidden="true"><use href="#i-store"/></svg>Formulario B2B para bodegas</h3>
+          <p>¿Tienes bodega, quiosco o colpeo? Precio mayorista desde 10 pouches y muestras gratis.</p>
+          <span class="b2b-tag" style="margin-bottom:16px"><svg aria-hidden="true" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><use href="#i-users"/></svg>Solo para comercios</span>
+
+          <div class="field">
+            <label for="bName">Nombre del negocio <span class="req" aria-hidden="true">*</span></label>
+            <input id="bName" name="negocio" type="text" placeholder="Ej. Bodega Don Julio" autocomplete="organization" required>
+          </div>
+          <div class="field" style="margin-top:14px">
+            <label for="bDir">Dirección <span class="req" aria-hidden="true">*</span></label>
+            <input id="bDir" name="direccion" type="text" placeholder="Ej. Av. 225 Mz. F Lt. 12, Pachacútec" autocomplete="street-address" required>
+          </div>
+          <div class="field" style="margin-top:14px">
+            <label for="bTel">Teléfono <span class="req" aria-hidden="true">*</span></label>
+            <input id="bTel" name="telefono" type="tel" placeholder="910 147 552" autocomplete="tel" inputmode="tel" required>
+          </div>
+          <div class="field" style="margin-top:14px">
+            <label for="bZona">Zona donde vendes</label>
+            <select id="bZona" name="zona">
+              <option value="">Elige tu zona…</option>
+              <option>Pachacútec</option>
+              <option>Mi Perú</option>
+              <option>Ventanilla Centro</option>
+              <option>Otro distrito de Callao</option>
+              <option>Lima Metropolitana</option>
+            </select>
+          </div>
+          <div class="field" style="margin-top:14px">
+            <label for="bRot">Rotación aproximada por semana</label>
+            <select id="bRot" name="rotacion">
+              <option value="">No lo sé todavía</option>
+              <option>1 a 5 pouches</option>
+              <option>6 a 15 pouches</option>
+              <option>16 a 30 pouches</option>
+              <option>Más de 30 pouches</option>
+            </select>
+          </div>
+
+          <span class="ferr" id="bErr" role="alert" style="color:var(--rojo);display:block;margin-top:12px"></span>
+          <button class="btn btn-amar btn-block" type="submit" style="margin-top:12px">
+            <svg class="stroke" aria-hidden="true"><use href="#i-send"/></svg>Solicitar Muestras Gratis
+          </button>
+          <div class="fok" id="bOk" style="margin-top:12px">Solicitud enviada. Coordinamos la visita y las muestras.</div>
+        </form>
+      </div>
+
       <div class="mapcard rv" style="margin-top:24px">
         <div class="maptitle"><svg aria-hidden="true"><use href="#i-pin"/></svg>Aquí se preparan: I.E. N° 5130 Pachacútec · Av. 225, Pachacutec</div>
         <div class="mapreal">
@@ -1351,7 +899,7 @@ body::before{opacity:.45;animation-duration:36s}
     <div class="fgrid">
       <div>
         <div class="fbrand">
-          <span class="logo"><img src="https://images.pexels.com/photos/12576322/pexels-photo-12576322.jpeg?auto=compress&cs=tinysrgb&w=160&h=160&fit=crop" alt="" width="44" height="44" decoding="async" onerror="this.remove()"><svg aria-hidden="true"><use href="#bear"/></svg></span>
+          <span class="logo"><svg aria-hidden="true"><use href="#bear"/></svg></span>
           <span><b>GOMI LIGHT</b><small>Pachacutec · I.E. 5130</small></span>
         </div>
         <p style="color:#ffd6e5;max-width:34ch;font-weight:500">Gomitas con fruta real, pectina natural y 0% azúcar añadida. Un proyecto escolar que endulza el barrio sin amargar la salud.</p>
@@ -1390,7 +938,7 @@ body::before{opacity:.45;animation-duration:36s}
   </div>
   <div class="drawer-b" id="cartLines">
     <div class="cempty">
-      <img src="https://images.pexels.com/photos/31665692/pexels-photo-31665692.jpeg?auto=compress&cs=tinysrgb&w=160&h=160&fit=crop" alt="" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;box-shadow:var(--sh-sm)" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      
       <svg style="--g:#ff9dbf;--gd:#7a1233;display:none" aria-hidden="true"><use href="#bear"/></svg>
       Tu carrito está vacío.<br>Los ositos te esperan en la tienda.
       <div style="margin-top:14px"><a class="btn btn-fresa btn-sm" href="#/tienda" data-route="tienda" id="emptyGo">Ver packs</a></div>
@@ -1398,21 +946,31 @@ body::before{opacity:.45;animation-duration:36s}
   </div>
   <div class="drawer-f" id="cartFoot" style="display:none">
     <div class="tot"><span>Total</span><b id="cartTotal">S/0</b></div>
+    <div class="cart-save" id="cartSave" role="status" aria-live="polite">
+      <span id="cartSaveTxt">Ahorro aplicado</span>
+      <b id="cartSaveAmt">-S/0</b>
+    </div>
     <a class="btn btn-wa btn-block" id="cartWa" href="#" target="_blank" rel="noopener"><svg aria-hidden="true" style="fill:currentColor"><use href="#wa"/></svg>Pedir por WhatsApp</a>
     <small>Pago: Yape · Plin · efectivo contra entrega</small>
   </div>
 </aside>
 
 <!-- ============ DULCITA ============ -->
-<button class="botfab" id="botFab" type="button" aria-label="Abrir asistente Dulcita">
-  <img src="https://images.pexels.com/photos/5469042/pexels-photo-5469042.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop" alt="" onerror="this.remove()">
+<!-- Boton flotante de WhatsApp: esquina inferior derecha, icono oficial,
+     pulso sutil en anillo. Queda apilado sobre el asistente Dulcita. -->
+<a class="wa-float" id="waFloat" href="https://wa.me/51910147552?text=Hola%20GOMI%20LIGHT%2C%20quiero%20hacer%20un%20pedido." target="_blank" rel="noopener" aria-label="Escribir a GOMI LIGHT por WhatsApp">
+  <span class="wa-tip" aria-hidden="true">Escríbenos por WhatsApp</span>
+  <svg aria-hidden="true" focusable="false"><use href="#wa"/></svg>
+</a>
+<button class="botfab" id="botFab" type="button" aria-label="Abrir asistente Dulcita" aria-expanded="false" aria-controls="botPanel">
+  
   <svg aria-hidden="true"><use href="#bear"/></svg>
   <span class="bdg">?</span>
 </button>
 <div class="botpanel" id="botPanel" role="dialog" aria-label="Asistente Dulcita">
   <div class="bot-h">
-    <span class="bavatar"><img src="https://images.pexels.com/photos/33579702/pexels-photo-33579702.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="" onerror="this.remove()"><svg aria-hidden="true"><use href="#bear"/></svg></span>
-    <div><b>Dulcita</b><small id="botStatus">Asistente GOMI · en línea</small></div>
+    <span class="bavatar"><svg aria-hidden="true"><use href="#bear"/></svg></span>
+    <div><b>Dulcita</b><small>Asistente GOMI · en línea</small></div>
     <button class="xbtn" id="botClose" type="button" aria-label="Cerrar asistente"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
   </div>
   <div class="bot-m" id="botMsgs" aria-live="polite"></div>
@@ -1440,605 +998,8 @@ body::before{opacity:.45;animation-duration:36s}
   <a href="#/contacto" data-route="contacto"><svg aria-hidden="true"><use href="#i-mail"/></svg>Contacto</a>
   <a href="https://wa.me/51910147552?text=Hola%20GOMI%20LIGHT" target="_blank" rel="noopener"><svg aria-hidden="true" style="stroke:var(--wa)"><use href="#wa"/></svg>WhatsApp</a>
 </div>
-<style>
-#toast svg{stroke:#ffd166;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.sheet a:last-child svg{fill:var(--wa);stroke:none}
-</style>
-<script>
-(function(){
-'use strict';
-var $=function(s){return document.querySelector(s)}, $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
-var WA='51910147552';
-var GB='https://images.pexels.com/photos/33579702/pexels-photo-33579702.jpeg?auto=compress&cs=tinysrgb&w=120&h=120&fit=crop';
 
-/* ================= DATOS ================= */
-var FLAVORS=[
- {name:'Fresa Andina',color:'#ff4d88',desc:'Fresa real con toque de pitahaya, rica en vitamina C.',kcal:42,extra:'Vit C',img:'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=200&q=70&auto=format&fit=crop',wa:'Fresa%20Andina',gd:'#7a1233'},
- {name:'Mango Jengibre',color:'#ffb020',desc:'Mango maduro con jengibre fresco. Energía digestiva para la tarde.',kcal:45,extra:'Energía',img:'https://images.unsplash.com/photo-1553279768-865429fa0078?w=200&q=70&auto=format&fit=crop',wa:'Mango%20Jengibre',gd:'#7a4a00'},
- {name:'Arándano Nocturno',color:'#7c5cff',desc:'Antioxidantes + colágeno hidrolizado. Ideal después del deporte.',kcal:40,extra:'Colágeno',img:'https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=200&q=70&auto=format&fit=crop',wa:'Ar%C3%A1ndano%20Nocturno',gd:'#2a1466'},
- {name:'Limón Menta',color:'#38d9a9',desc:'Cítrico helado con menta y electrolitos. Refresca sin cafeína.',kcal:38,extra:'Frescura',img:'https://images.unsplash.com/photo-1590502593747-42a996133562?w=200&q=70&auto=format&fit=crop',wa:'Lim%C3%B3n%20Menta',gd:'#0a3f30'}
-];
-var PACKS={
- recreo:{name:'Pack Recreo · 1 pouch',unit:12,color:'#ff2e55'},
- familiar:{name:'Pack Familiar · 3 pouches',unit:33,color:'#e6266f'},
- escolar:{name:'Pack Escolar · 5 pouches',unit:50,color:'#7c5cff'},
- mix:{name:'Pouch surtido',unit:12,color:'#ffb020'}
-};
-var TITLES={
- inicio:'GOMI LIGHT · Gomitas saludables sin azúcar añadida · Pachacutec',
- sabores:'Sabores · GOMI LIGHT',
- nutricion:'Nutrición · GOMI LIGHT',
- historia:'Nuestra historia · GOMI LIGHT',
- tienda:'Tienda y packs · GOMI LIGHT',
- faq:'Preguntas frecuentes · GOMI LIGHT',
- contacto:'Contacto · GOMI LIGHT'
-};
-
-/* ================= ROUTER ================= */
-function route(){
-  var h=(location.hash||'#/').replace(/^#\/?/,'').split('?')[0]||'inicio';
-  if(!TITLES[h])h='inicio';
-  $$('.page').forEach(function(p){p.classList.toggle('is-active',p.dataset.page===h)});
-  $$('a[data-route]').forEach(function(a){a.classList.toggle('on',a.dataset.route===h)});
-  document.title=TITLES[h];
-  closeMenu();closeSheet();closeCart();
-  window.scrollTo(0,0);
-}
-window.addEventListener('hashchange',route);
-
-/* ================= MENÚ MÓVIL ================= */
-var burger=$('#burger'),mnav=$('#mnav');
-function closeMenu(){mnav.classList.remove('open');burger.classList.remove('open');burger.setAttribute('aria-expanded','false')}
-burger.addEventListener('click',function(){
-  var open=mnav.classList.toggle('open');
-  burger.classList.toggle('open',open);
-  burger.setAttribute('aria-expanded',open);
-});
-
-/* ================= TEMA (rosa-amarillo ↔ rojo-azul) ================= */
-var root=document.documentElement,themeBtn=$('#themeBtn');
-function setTheme(t){
-  root.setAttribute('data-theme',t);
-  try{localStorage.setItem('gomi-theme',t)}catch(e){}
-  themeBtn.querySelector('use').setAttribute('href',t==='dark'?'#i-sun':'#i-moon');
-  var mc=document.querySelector('meta[name=theme-color]');
-  if(mc)mc.setAttribute('content',t==='dark'?'#0b0f2a':'#e6266f');
-}
-try{
-  var st=localStorage.getItem('gomi-theme');
-  setTheme(st||(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
-}catch(e){setTheme('light')}
-themeBtn.addEventListener('click',function(){
-  setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');
-});
-
-/* ================= MOVIMIENTO + FONDO DE CARAMELO (canvas) =================
-   BG_CANDY=false en el pase profesional: no se crea el canvas de fondo para
-   ahorrar batería y CPU. Ponlo en true si quieres recuperar los caramelos. */
-var BG_CANDY=false;
-var motionBtn=$('#motionBtn');
-var bgC=document.createElement('canvas');
-bgC.id='bgfx';bgC.setAttribute('aria-hidden','true');
-if(BG_CANDY)document.body.insertBefore(bgC,document.body.firstChild);
-var bgRAF=null,bgW=0,bgH=0,bgT=0,bgItems=[];
-function motionOn(){return root.getAttribute('data-motion')!=='off'}
-function bgColors(){
-  return root.getAttribute('data-theme')==='dark'
-    ?['77,163,255','255,77,109','255,209,102']
-    :['214,32,92','194,88,20','157,92,255'];
-}
-function bgSize(){
-  var dpr=Math.min(2,window.devicePixelRatio||1),ctx=bgC.getContext('2d');
-  bgW=window.innerWidth;bgH=window.innerHeight;
-  bgC.width=bgW*dpr;bgC.height=bgH*dpr;
-  bgC.style.width=bgW+'px';bgC.style.height=bgH+'px';
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  bgItems=[];
-  var nb=Math.max(6,Math.min(13,Math.floor(bgW/110)));
-  for(var i=0;i<nb;i++)bgItems.push({t:'b',x:Math.random()*bgW,y:Math.random()*bgH,r:18+Math.random()*46,vx:(Math.random()-.5)*.24,vy:-(.05+Math.random()*.14),c:Math.floor(Math.random()*3),p:Math.random()*6.28});
-  var ng=Math.max(5,Math.min(11,Math.floor(bgW/120)));
-  for(var i=0;i<ng;i++)bgItems.push({t:'g',x:Math.random()*bgW,y:Math.random()*bgH,r:7+Math.random()*9,vx:(Math.random()-.5)*.2,vy:-(.14+Math.random()*.22),rot:Math.random()*6.28,vr:(Math.random()-.5)*.014,c:Math.floor(Math.random()*3),p:Math.random()*6.28});
-  for(var i=0;i<12;i++)bgItems.push({t:'s',x:Math.random()*bgW,y:Math.random()*bgH,r:1.4+Math.random()*1.8,p:Math.random()*6.28,s:.6+Math.random()*1.6,c:Math.floor(Math.random()*3)});
-}
-function bgBear(ctx,it,col){
-  var R=it.r;
-  ctx.save();ctx.translate(it.x,it.y);ctx.rotate(it.rot);
-  ctx.fillStyle=col;
-  ctx.beginPath();ctx.arc(-R*.75,-R*1.55,R*.34,0,6.283);ctx.fill();
-  ctx.beginPath();ctx.arc(R*.75,-R*1.55,R*.34,0,6.283);ctx.fill();
-  ctx.beginPath();ctx.arc(0,-R*.85,R*.8,0,6.283);ctx.fill();
-  ctx.beginPath();ctx.arc(0,0,R,0,6.283);ctx.fill();
-  ctx.beginPath();ctx.arc(-R*1.05,-R*.1,R*.36,0,6.283);ctx.fill();
-  ctx.beginPath();ctx.arc(R*1.05,-R*.1,R*.36,0,6.283);ctx.fill();
-  ctx.beginPath();ctx.arc(-R*.55,R*.85,R*.4,0,6.283);ctx.fill();
-  ctx.beginPath();ctx.arc(R*.55,R*.85,R*.4,0,6.283);ctx.fill();
-  ctx.fillStyle='rgba(255,255,255,.3)';
-  ctx.beginPath();ctx.arc(-R*.35,-R*1.15,R*.22,0,6.283);ctx.fill();
-  ctx.restore();
-}
-function bgStep(){
-  bgT+=.016;
-  var ctx=bgC.getContext('2d'),cols=bgColors(),dark=root.getAttribute('data-theme')==='dark';
-  ctx.clearRect(0,0,bgW,bgH);
-  for(var i=0;i<bgItems.length;i++){
-    var it=bgItems[i],col=cols[it.c];
-    if(it.t==='b'){
-      it.x+=it.vx+Math.sin(bgT*.5+it.p)*.12;it.y+=it.vy;
-      if(it.y<-it.r*2)it.y=bgH+it.r*2;
-      if(it.x<-it.r*2)it.x=bgW+it.r*2;if(it.x>bgW+it.r*2)it.x=-it.r*2;
-      var g=ctx.createRadialGradient(it.x,it.y,0,it.x,it.y,it.r);
-      g.addColorStop(0,'rgba('+col+','+(dark?.14:.10)+')');
-      g.addColorStop(1,'rgba('+col+',0)');
-      ctx.fillStyle=g;ctx.beginPath();ctx.arc(it.x,it.y,it.r,0,6.283);ctx.fill();
-    }else if(it.t==='g'){
-      it.x+=it.vx+Math.sin(bgT*.6+it.p)*.18;it.y+=it.vy;it.rot+=it.vr;
-      if(it.y<-it.r*3){it.y=bgH+it.r*3;it.x=Math.random()*bgW}
-      if(it.x<-it.r*3)it.x=bgW+it.r*3;if(it.x>bgW+it.r*3)it.x=-it.r*3;
-      bgBear(ctx,it,'rgba('+col+','+(dark?.22:.16)+')');
-    }else{
-      var a=.25+.22*Math.sin(bgT*it.s*2+it.p);
-      if(a>.07){
-        ctx.save();ctx.translate(it.x,it.y);ctx.rotate(bgT*.4+it.p);
-        ctx.fillStyle='rgba('+col+','+a.toFixed(3)+')';
-        ctx.beginPath();ctx.moveTo(0,-it.r*1.6);ctx.lineTo(it.r*.5,0);ctx.lineTo(0,it.r*1.6);ctx.lineTo(-it.r*.5,0);ctx.closePath();ctx.fill();
-        ctx.restore();
-      }
-    }
-  }
-  bgRAF=requestAnimationFrame(bgStep);
-}
-function bgStop(){
-  if(bgRAF){cancelAnimationFrame(bgRAF);bgRAF=null}
-  if(bgC.getContext)bgC.getContext('2d').clearRect(0,0,bgC.width,bgC.height);
-}
-function bgToggle(){if(!BG_CANDY){bgStop();return}if(motionOn()){if(!bgRAF){bgSize();bgStep()}}else{bgStop()}}
-function setMotion(on,save){
-  root.setAttribute('data-motion',on?'on':'off');
-  motionBtn.classList.toggle('is-off',!on);
-  motionBtn.setAttribute('aria-pressed',String(on));
-  if(save){try{localStorage.setItem('gomi-motion',on?'on':'off')}catch(e){}}
-  bgToggle();
-}
-(function(){
-  var m=null;try{m=localStorage.getItem('gomi-motion')}catch(e){}
-  var osReduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-  if(m==='on'||m==='off'){setMotion(m==='on',false)}
-  else{
-    setMotion(!osReduced,false);
-  }
-})();
-motionBtn.addEventListener('click',function(){
-  setMotion(!motionOn(),true);
-  toast(motionOn()?'Animaciones activadas':'Animaciones pausadas');
-});
-window.addEventListener('resize',function(){if(bgRAF)bgSize()},{passive:true});
-document.addEventListener('visibilitychange',function(){
-  if(document.hidden){bgStop()}else if(motionOn()){bgToggle()}
-});
-
-/* ================= TOAST + CONFETTI ================= */
-var toastTimer;
-function toast(msg){
-  var t=$('#toast');
-  t.innerHTML='<svg aria-hidden="true"><use href="#i-check"/></svg>'+msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show')},2300);
-}
-function confetti(){
-  var cols=['#ff2e55','#ff8a3d','#ffd166','#ff4d88','#7c5cff'];
-  for(var i=0;i<16;i++){
-    var c=document.createElement('i');c.className='conf';
-    c.style.left=(45+Math.random()*10)+'vw';c.style.top='58%';
-    c.style.background=cols[i%cols.length];
-    c.style.setProperty('--dx',(Math.random()*280-140)+'px');
-    c.style.setProperty('--dy',(-130-Math.random()*200)+'px');
-    document.body.appendChild(c);
-    setTimeout(function(el){return function(){el.remove()}}(c),1000);
-  }
-}
-
-/* ================= SKELETON + VUELO AL CARRITO ================= */
-function initSkeletons(){
-  $$('.photo,.fph,.lab-photo,.hero-photo,.hero-chip').forEach(function(c){
-    var img=c.querySelector('img');if(!img)return;
-    if(img.complete&&img.naturalWidth>0)return;
-    c.classList.add('sk');
-    var clear=function(){c.classList.remove('sk')};
-    img.addEventListener('load',clear,{once:true});
-    img.addEventListener('error',clear,{once:true});
-  });
-}
-function flyToCart(fromEl,color,imgUrl){
-  var cart=$('#cartBtn');if(!cart||!fromEl)return;
-  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-  try{
-    var r=fromEl.getBoundingClientRect(),tr=cart.getBoundingClientRect();
-    var f=document.createElement(imgUrl?'img':'span');
-    f.className='fly';
-    if(imgUrl){f.src=imgUrl;f.alt=''}else{f.style.background='linear-gradient(135deg,'+(color||'#ff4d88')+' 20%,#ffd166)'}
-    f.style.left=(r.left+r.width/2-22)+'px';
-    f.style.top=(r.top+r.height/2-22)+'px';
-    document.body.appendChild(f);
-    var dx=(tr.left+tr.width/2)-(r.left+r.width/2);
-    var dy=(tr.top+tr.height/2)-(r.top+r.height/2);
-    var anim=f.animate([
-      {transform:'translate(0,0) scale(1) rotate(0deg)',opacity:1},
-      {transform:'translate('+(dx*.5)+'px,'+(dy*.35-120)+'px) scale(.8) rotate(200deg)',opacity:1,offset:.55},
-      {transform:'translate('+dx+'px,'+dy+'px) scale(.15) rotate(390deg)',opacity:.3}
-    ],{duration:760,easing:'cubic-bezier(.5,.05,.6,1)'});
-    anim.onfinish=function(){f.remove()};
-  }catch(e){}
-}
-
-/* ================= CARRITO ================= */
-var cart={},emptyHTML;
-try{cart=JSON.parse(localStorage.getItem('gomi-cart'))||{}}catch(e){cart={}}
-function saveCart(){try{localStorage.setItem('gomi-cart',JSON.stringify(cart))}catch(e){}}
-function addItem(key,def){
-  if(cart[key]){cart[key].qty++}else{cart[key]={name:def.name,unit:def.unit,color:def.color,qty:1,img:def.img||null}}
-  saveCart();renderCart();badgePop();
-}
-function badgePop(){
-  var b=$('#cartCount');b.classList.remove('pulse');void b.offsetWidth;b.classList.add('pulse');
-}
-function cartCount(){return Object.keys(cart).reduce(function(s,k){return s+cart[k].qty},0)}
-function cartTotal(){return Object.keys(cart).reduce(function(s,k){return s+cart[k].qty*cart[k].unit},0)}
-function renderCart(){
-  var n=cartCount(),lines=$('#cartLines'),foot=$('#cartFoot'),badge=$('#cartCount');
-  badge.textContent=n;badge.style.display=n?'grid':'none';
-  $('#cartBtn').classList.toggle('has',n>0);
-  if(!n){lines.innerHTML=emptyHTML;foot.style.display='none';return}
-  foot.style.display='grid';
-  lines.innerHTML='';
-  Object.keys(cart).forEach(function(k){
-    var it=cart[k],d=document.createElement('div');d.className='cline';
-    var vis=it.img
-      ?'<span class="cdot"><img src="'+it.img+'" alt=""></span>'
-      :'<span class="cdot" style="background:var(--grad-sun)"><img src="https://images.pexels.com/photos/31665692/pexels-photo-31665692.jpeg?auto=compress&cs=tinysrgb&w=80&h=80&fit=crop" alt="" onerror="this.remove()"><svg style="--g:#e6266f;--gd:#7a1233" aria-hidden="true"><use href="#bear"/></svg></span>';
-    d.innerHTML=vis+
-      '<span class="cinfo"><b>'+it.name+'</b><small>S/'+it.unit+' c/u</small></span>'+
-      '<span class="qty"><button type="button" data-q="-" data-k="'+k+'" aria-label="Quitar uno"><svg style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round"><use href="#i-minus"/></svg></button><span>'+it.qty+'</span><button type="button" data-q="+" data-k="'+k+'" aria-label="Agregar uno"><svg style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round"><use href="#i-plus"/></svg></button></span>';
-    lines.appendChild(d);
-  });
-  $('#cartTotal').textContent='S/'+cartTotal();
-  var msg='¡Hola GOMI LIGHT! Quiero pedir:\n'+Object.keys(cart).map(function(k){var i=cart[k];return '• '+i.qty+'× '+i.name+' (S/'+(i.qty*i.unit)+')'}).join('\n')+'\nTotal: S/'+cartTotal();
-  $('#cartWa').href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
-}
-document.addEventListener('click',function(e){
-  var b=e.target.closest('[data-q]');
-  if(!b)return;
-  var k=b.dataset.k;
-  if(b.dataset.q==='+'){cart[k].qty++}else{cart[k].qty--;if(cart[k].qty<=0)delete cart[k]}
-  saveCart();renderCart();badgePop();
-});
-function openCart(){$('#drawer').classList.add('open');$('#overlay').classList.add('show');$('#drawer').setAttribute('aria-hidden','false')}
-function closeCart(){$('#drawer').classList.remove('open');$('#overlay').classList.remove('show');$('#drawer').setAttribute('aria-hidden','true')}
-$('#cartBtn').addEventListener('click',openCart);
-$('#closeCart').addEventListener('click',closeCart);
-$('#overlay').addEventListener('click',closeCart);
-document.addEventListener('click',function(e){
-  var b=e.target.closest('[data-add]');
-  if(b){
-    var f=FLAVORS[+b.dataset.add];
-    var card=b.closest('.fcard'),ph=card?card.querySelector('.fph img'):null;
-    flyToCart(b,f.color,ph?ph.src:null);
-    addItem('f'+b.dataset.add,{name:'Pouch '+f.name,unit:12,color:f.color,img:f.img});
-    toast(f.name+' agregado');confetti();return;
-  }
-  b=e.target.closest('[data-packadd]');
-  if(b){var p=PACKS[b.dataset.packadd];flyToCart(b,p.color,GB);addItem(b.dataset.packadd,p);toast(p.name+' agregado');confetti()}
-});
-
-/* ================= LAB DE SABORES ================= */
-var labF=0,lab=$('.lab'),labImg=$('#labImg'),labBear=$('#labBear');
-function setLab(i){
-  labF=i;var f=FLAVORS[i];
-  $$('.ftab').forEach(function(t,j){t.classList.toggle('on',j===i);t.setAttribute('aria-selected',j===i)});
-  lab.style.setProperty('--fc',f.color);
-  labImg.src=f.img.replace('w=200','w=500');
-  labImg.alt=f.name;
-  var lp=labImg.closest('.lab-photo');
-  if(!(labImg.complete&&labImg.naturalWidth>0)){
-    lp.classList.add('sk');
-    labImg.addEventListener('load',function(){lp.classList.remove('sk')},{once:true});
-    labImg.addEventListener('error',function(){lp.classList.remove('sk')},{once:true});
-  }else{lp.classList.remove('sk')}
-  labBear.style.setProperty('--g',f.color);
-  labBear.style.setProperty('--gd',f.gd);
-  $('#labName').textContent=f.name;
-  $('#labDesc').textContent=f.desc;
-  $('#labKcal').textContent=f.kcal;
-  $('#labExtra').textContent=f.extra;
-  $('#labWa').href='https://wa.me/'+WA+'?text=Hola%2C%20quiero%20el%20pouch%20de%20'+f.wa;
-}
-$$('.ftab').forEach(function(t,i){t.addEventListener('click',function(){setLab(i)})});
-$('#labAdd').addEventListener('click',function(){
-  var f=FLAVORS[labF];
-  flyToCart(this,f.color,labImg.src);
-  addItem('f'+labF,{name:'Pouch '+f.name,unit:12,color:f.color,img:f.img});
-  toast(f.name+' agregado');confetti();
-});
-
-/* ================= CALCULADORA ================= */
-var range=$('#calcRange');
-function calc(){
-  var n=+range.value,t=12*n,hint;
-  if(n===1){hint='Perfecto para probar. El <b>Recreo</b> es el primer paso.'}
-  else if(n===3){hint='Con 3 pouches te sale mejor el pack <b>Familiar: S/33</b> (ahorras S/3).'}
-  else if(n===5){hint='Con 5 pouches te sale mejor el pack <b>Escolar: S/50</b> (ahorras S/10).'}
-  else if(n>5){hint='Para '+n+'+ pouches escríbenos por WhatsApp: tenemos <b>precio mayorista</b>.'}
-  else{hint='Envío local <b>gratis</b> en Pachacutec, Mi Perú y Ventanilla.'}
-  $('#calcQty').textContent=n;
-  $('#calcTotal').textContent='S/'+t;
-  $('#calcHint').innerHTML=hint;
-  $('#calcAdd').innerHTML='<svg class="stroke" aria-hidden="true"><use href="#i-cart"/></svg>Agregar '+n+' pouch'+(n>1?'es surtidos':' surtido');
-}
-range.addEventListener('input',calc);
-$('#calcAdd').addEventListener('click',function(){
-  var n=+range.value;
-  flyToCart(this,'#ffb020',GB);
-  if(cart['mix']){cart['mix'].qty+=n}else{cart['mix']={name:'Pouch surtido ×'+n,unit:12*n,color:'#ffb020',qty:1}}
-  saveCart();renderCart();badgePop();toast(n+' pouch surtido agregado');confetti();
-});
-
-/* ================= FAQ ================= */
-$$('.qa').forEach(function(qa){
-  qa.querySelector('button').addEventListener('click',function(){
-    var open=qa.classList.contains('on');
-    $$('.qa').forEach(function(q){q.classList.remove('on');q.querySelector('.ans').style.maxHeight=0});
-    if(!open){qa.classList.add('on');var a=qa.querySelector('.ans');a.style.maxHeight=a.scrollHeight+'px'}
-  });
-});
-
-/* ================= DULCITA · ASISTENTE CON IA =================
-   Cadena de respuesta:
-     1) NVIDIA NIM  · openai/gpt-oss-20b   (proveedor principal)
-     2) Pollinations                        (respaldo automático)
-     3) INTENTS locales                     (sin conexión)
-   AVISO DE SEGURIDAD: la clave de NVIDIA queda a la vista en el código de
-   esta página. Quien abra el código puede usarla. Conviene ponerle límite de
-   consumo y rotarla tras la publicación. */
-var NV_MODEL='openai/gpt-oss-20b';
-/* El navegador NO puede llamar a NVIDIA directo: la API exige la cabecera
-   Authorization, eso dispara un preflight y NVIDIA no lo aprueba (no envía
-   Access-Control-Allow-Origin), así que el navegador lo bloquea. La salida es
-   un proxy propio: pega aquí la dirección del Worker de worker-nvidia.js
-   (https://lo-que-sea.workers.dev). La clave de NVIDIA vive DENTRO del Worker,
-   no en este archivo, así que no queda expuesta en la web.
-     AI_PROXY=''            -> sin proxy: se usa solo el respaldo
-     AI_PROXY='https://...' -> NVIDIA gpt-oss-20b como respuesta principal     */
-var AI_PROXY='';
-var PL_URL='https://text.pollinations.ai/openai';
-var PL_MODEL='gpt-oss-20b';
-
-var BOT_SYS=[
-'Eres Dulcita, la asistente de ventas de GOMI LIGHT, una marca peruana de gomitas',
-'naturales saludables citadas por estudiantes de la I.E. 5130 Pachacutec',
-'(Ventanilla, Callao). Respondes SIEMPRE en español del Perú, con tono amable,',
-'cercano y seguro. Eres concisa: máximo 2 o 3 frases por respuesta, sin listas',
-'largas ni emojis. Conoces el producto y solo das datos reales de esta lista:',
-'',
-'PRECOS: pouch de 30 gomitas S/12. Packs: Recreo S/12, Familiar x3 S/33 (el más',
-'vendido), Escolar x5 S/50. Pouch surtido disponible. El envío se paga aparte.',
-'',
-'SABORES (4): Fresa Andina (fresa y pitahaya, con vitamina C), Mango Jengibre',
-'(energía, con jengibre fresco), Arándano Nocturno (antioxidantes y colágeno),',
-'Limón Menta (refrescante, sin cafeína). Todos a S/12 el pouch.',
-'',
-'NUTRICIÓN por 5 gomitas: 42 kcal, 0 g de azúcar añadida, 3 g de azúcar total',
-'que viene de la fruta, 2 g de fibra, 30% del valor diario de vitamina C, sin',
-'colorantes artificiales. Usamos 42% de fruta real y pectina de cítricos, nunca',
-'gelatina animal. Endulzamos con stevia y eritritol. Sin gluten ni conservantes.',
-'Tres de los cuatro sabores son veganos; solo Arándano lleva colágeno.',
-'',
-'ENVÍOS: gratis en Pachacutec, Mi Perú y Ventanilla con entrega el mismo día;',
-'Callao y Lima metropolitana S/8 con 24 a 48 horas.',
-'',
-'PAGOS: Yape, Plin, transferencia o efectivo contra entrega. Duración del pouch:',
-'6 meses. Producido en cocina certificada BPM con código de lote.',
-'',
-'PEDIDOS: se arman en el carrito de la web y se confirman por WhatsApp al',
-'910 147 552. Horario de atención: lunes a sábado de 9am a 7pm, responden en',
-'menos de una hora.',
-'',
-'MAYORISTAS: precio especial desde 10 pouches para bodegas, quioscos y',
-'colpeos, con visita y muestras.',
-'',
-'UBICACIÓN: Av. 225, Pachacutec, Ventanilla, Callao, junto a la I.E. 5130.',
-'',
-'REGLAS: si te preguntan algo que no está en esta lista, no lo inventes: di con',
-'franqueza que eso lo confirma el equipo y ofrece escribir por WhatsApp.',
-'Nunca inventes precios, promociones ni fechas. Si hay duda de sabor o',
-'cantidad, pregunta cuál buscan antes de recomendar. Puedes sugerir atajos como',
-'"Ver packs", "Ver sabores", "Ver envíos" o "Escríbenos".'
-].join(' ');var BOT_DEFAULT='Esa consulta se la paso al equipo humano para que te confirmen bien. Mientras tanto, escríbenos por WhatsApp al <b>910 147 552</b> y te respondemos en menos de una hora.';
-var CHIPS=['¿Precio?','¿Tienen azúcar?','¿Hacen envíos?','¿Son veganas?','¿Cómo pido?','Ser punto de venta'];
-var INTENTS=[
- {re:/precio|cuesta|cu[aá]nto|tarif/i,a:'Un pouch de 30 gomitas cuesta <b>S/12</b>. Con packs ahorras: <b>Familiar 3× S/33</b> y <b>Escolar 5× S/50</b>.',c:['Ver packs','tienda']},
- {re:/az[uú]car|azucar|dulc/i,a:'<b>0% azúcar añadida</b>. Endulzamos con stevia y eritritol; el único azúcar (≈3 g) viene de la fruta real.',c:['Ver nutrición','nutricion']},
- {re:/env[ií]o|entrega|llega|demora/i,a:'Envío <b>gratis</b> en Pachacutec, Mi Perú y Ventanilla (mismo día). Callao y Lima: S/8, en 24–48 h.',c:['Ir a la tienda','tienda']},
- {re:/vegano|vegan|gelatina|animal/i,a:'Usamos <b>pectina de cítricos</b>, no gelatina. Fresa, Mango y Limón Menta son veganos; el Arándano lleva colágeno.',c:['Más detalles','nutricion']},
- {re:/pedir|comprar|orden|carrito|pedido/i,a:'¡Buenísimo! Agrega tus packs al <b>carrito</b> y los pides por WhatsApp en segundos.',c:['Elegir pack','tienda']},
- {re:/punto de venta|mayorist|bodega|quiosco|revend/i,a:'Trabajamos con bodegas y quioscos con <b>precio mayorista desde 10 pouches</b>. Te visitamos con muestras.',c:['Escribirme','contacto']},
- {re:/ni[nñ]o|hijo|peque/i,a:'¡Aptas para peques! Porción de recreo, sin cafeína, sin gluten y sin colorantes artificiales.'},
- {re:/sabor|sabores|cu[aá]les/i,a:'Tenemos 4: <b>Fresa Andina</b>, <b>Mango Jengibre</b>, <b>Arándano Nocturno</b> y <b>Limón Menta</b>. Todos a S/12.',c:['Ver sabores','sabores']},
- {re:/hola|buenas|hey|qu[eé] tal/i,a:'¡Hola! Soy <b>Dulcita</b>, la gomita informática. Pregúntame por precios, envíos, sabores o cómo pedir.'},
- {re:/gracias|thank/i,a:'¡Con gusto! ¿Te muestro los <b>packs</b> para tu primer pedido?',c:['Ver packs','tienda']}
-];
-var botFab=$('#botFab'),botPanel=$('#botPanel'),botMsgs=$('#botMsgs'),greeted=false;
-var botHistory=[],botBusy=false;
-function bubble(cls,html){
-  var d=document.createElement('div');d.className='bmsg '+cls;
-  if(cls==='user'){d.textContent=html}else{d.innerHTML=html}
-  botMsgs.appendChild(d);botMsgs.scrollTop=botMsgs.scrollHeight;
-  return d;
-}
-function ctaLink(c){return c?' <a href="#/'+c[1]+'" data-route="'+c[1]+'">'+c[0]+' →</a>':''}
-function escTxt(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function mdLite(s){
-  var t=escTxt(s).replace(/\r/g,'').replace(/^[\s]*Dulcita\s*:\s*/i,'');
-  t=t.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/`(.+?)`/g,'<b>$1</b>');
-  return t.replace(/\n{2,}/g,'<br><br>').replace(/\n/g,'<br>');
-}
-function botStatus(t){var el=$('#botStatus');if(el)el.textContent=t}
-function smartCTA(t){
-  var s=(t||'').toLowerCase();
-  if(/pack|precio|cu[aá]nto|cuesta/.test(s))return ['Ver packs','tienda'];
-  if(/env[ií]o|entrega|llega/.test(s))return ['Ver envíos','contacto'];
-  if(/sabor/.test(s))return ['Ver sabores','sabores'];
-  if(/mayor|venta|quiosco|bodega/.test(s))return ['Escríbenos','contacto'];
-  if(/pedid|compr|carrito/.test(s))return ['Armar mi pedido','tienda'];
-  return null;
-}
-function fetchJSON(url,opts,ms){
-  var ctl=('AbortController' in window)?new AbortController():null,timer=setTimeout(function(){if(ctl)ctl.abort()},ms);
-  var o={method:'POST',headers:{'Content-Type':'application/json'},cache:'no-store'};
-  if(opts.headers)for(var k in opts.headers)o.headers[k]=opts.headers[k];
-  if(opts.body)o.body=opts.body;
-  if(ctl)o.signal=ctl.signal;
-  return fetch(url,o).then(function(r){
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    return r.json();
-  }).then(function(d){
-    var m=d&&d.choices&&d.choices[0]&&d.choices[0].message;
-    var txt=m&&(m.content||m.reasoning_content||m.reasoning);
-    if(!txt||String(txt).replace(/\s/g,'')==='')throw new Error('vacío');
-    return String(txt).trim();
-  }).finally(function(){clearTimeout(timer)});
-}
-function askNVIDIA(q){
-  var msgs=[{role:'system',content:BOT_SYS}];
-  botHistory.slice(-6).forEach(function(m){
-    if(m.t)msgs.push({role:m.r==='user'?'user':'assistant',content:m.t});
-  });
-  msgs.push({role:'user',content:q});
-  return fetchJSON(AI_PROXY+'/chat',{
-    body:JSON.stringify({model:NV_MODEL,messages:msgs,max_tokens:600,temperature:.6})
-  },26000);
-}
-function askPollinations(q){
-  var msgs=[{role:'system',content:BOT_SYS}];
-  botHistory.slice(-4).forEach(function(m){
-    if(m.t)msgs.push({role:m.r==='user'?'user':'assistant',content:m.t});
-  });
-  msgs.push({role:'user',content:q});
-  return fetchJSON(PL_URL,{
-    body:JSON.stringify({model:PL_MODEL,messages:msgs,max_tokens:220,temperature:.6})
-  },26000);
-}
-function botLocal(q){
-  var hit=null;
-  for(var i=0;i<INTENTS.length;i++){if(INTENTS[i].re.test(q)){hit=INTENTS[i];break}}
-  return hit?hit.a+ctaLink(hit.c):BOT_DEFAULT+ctaLink(['Contactarnos','contacto']);
-}
-function botAnswer(q){
-  q=String(q||'').trim();
-  if(!q||botBusy)return;
-  botBusy=true;
-  bubble('user',q);
-  botHistory.push({r:'user',t:q});
-  var typing=bubble('bot','<span class="blink"><i></i><i></i><i></i></span>');
-  botHistory.push({r:'bot',t:''});
-  var slot=botHistory.length-1;
-  function kill(){if(typing&&typing.parentNode)typing.remove()}
-  function done(html,plain,label){
-    kill();
-    bubble('bot',html);
-    botHistory[slot].t=plain;
-    botStatus(label);
-    botBusy=false;
-  }
-  botStatus('Escribiendo…');
-  var usarNVIDIA=!!AI_PROXY;
-  function conRespaldo(){
-    botStatus((usarNVIDIA?'NVIDIA no disponible · ':'')+'pruebo respaldo…');
-    askPollinations(q).then(function(txt){
-      done(mdLite(txt)+ctaLink(smartCTA(txt)),txt,'Respaldo · Pollinations');
-    }).catch(function(){
-      var html=botLocal(q);
-      done(html,html.replace(/<[^>]+>/g,''),'Sin conexión · respuestas locales');
-    });
-  }
-  if(!usarNVIDIA){conRespaldo();return}
-  askNVIDIA(q).then(function(txt){
-    done(mdLite(txt)+ctaLink(smartCTA(txt)),txt,'NVIDIA · '+NV_MODEL);
-  }).catch(conRespaldo);
-}
-function greet(){
-  if(greeted)return;greeted=true;
-  setTimeout(function(){
-    bubble('bot','¡Hola! Soy <b>Dulcita</b>, la gomita informática. Pregúntame precios, envíos, sabores o cómo pedir, y te respondo al momento.')
-  },250);
-  var chips=$('#botChips');chips.innerHTML='';
-  CHIPS.forEach(function(c){
-    var b=document.createElement('button');b.type='button';b.className='bchip';b.textContent=c;
-    b.addEventListener('click',function(){botAnswer(c)});
-    chips.appendChild(b);
-  });
-}
-botFab.addEventListener('click',function(){
-  var open=botPanel.classList.toggle('open');
-  if(open){greet();$('#botInput').focus()}
-});
-function closeBot(){botPanel.classList.remove('open')}
-$('#botClose').addEventListener('click',closeBot);
-document.addEventListener('keydown',function(e){
-  if(e.key==='Escape'){closeBot();closeCart();closeMenu();closeSheet()}
-});
-$('#botForm').addEventListener('submit',function(e){
-  e.preventDefault();
-  var inp=$('#botInput'),v=inp.value.trim();
-  if(!v)return;inp.value='';botAnswer(v);
-});
-
-/* ================= CONTACTO ================= */
-$('#cForm').addEventListener('submit',function(e){
-  e.preventDefault();
-  var n=$('#fName').value.trim(),w=$('#fWa').value.trim(),m=$('#fMsg').value.trim(),err=$('#fErr');
-  if(n.length<2){err.textContent='Cuéntanos tu nombre';return}
-  if(w.replace(/\D/g,'').length<6){err.textContent='Necesitamos un WhatsApp válido para responderte.';return}
-  err.textContent='';
-  var t=$('#fTopic').value;
-  var msg='¡Hola GOMI LIGHT!\nSoy '+n+' (WhatsApp: '+w+').\nMotivo: '+t+'\n'+(m||'Quiero hacer un pedido.');
-  window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank');
-  $('#fOk').classList.add('show');
-  toast('Mensaje enviado');
-});
-
-/* ================= SHEET MÓVIL ================= */
-var sheet=$('#sheet');
-function closeSheet(){sheet.classList.remove('open')}
-$('#moreBtn').addEventListener('click',function(){sheet.classList.toggle('open')});
-sheet.addEventListener('click',function(){setTimeout(closeSheet,180)});
-
-/* ================= REVEAL / CONTADORES / METERS ================= */
-var io=new IntersectionObserver(function(entries){
-  entries.forEach(function(en){
-    if(!en.isIntersecting)return;
-    var el=en.target;
-    if(el.classList.contains('rv'))el.classList.add('in');
-    if(el.dataset.count)countUp(el,+el.dataset.count);
-    if(el.dataset.meter)el.style.width=el.dataset.meter+'%';
-    io.unobserve(el);
-  });
-},{threshold:.18});
-$$('.rv,[data-count],[data-meter]').forEach(function(el){io.observe(el)});
-function countUp(el,target){
-  var t0=null,dur=1200;
-  function step(ts){
-    if(!t0)t0=ts;
-    var p=Math.min((ts-t0)/dur,1),e=1-Math.pow(1-p,3);
-    el.textContent=Math.round(target*e);
-    if(p<1)requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-
-/* ================= INIT ================= */
-emptyHTML=$('#cartLines').innerHTML;
-$('#year').textContent=new Date().getFullYear();
-initSkeletons();setLab(0);calc();renderCart();route();
-})();
-</script>
+<!-- Separation of Concerns: logica externa -->
+<script src="app.js" defer></script>
 </body>
 </html>
