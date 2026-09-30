@@ -349,8 +349,12 @@ function setLab(i){
     labImg.addEventListener('load',function(){lp.classList.remove('sk')},{once:true});
     labImg.addEventListener('error',function(){lp.classList.remove('sk')},{once:true});
   }else{lp.classList.remove('sk')}
-  labBear.style.setProperty('--g',f.color);
-  labBear.style.setProperty('--gd',f.gd);
+  /* El osito del laboratorio se elimino para que se vea la foto; el JS lo
+     busca por si acaso vuelve a estar en el HTML. */
+  if(labBear){
+    labBear.style.setProperty('--g',f.color);
+    labBear.style.setProperty('--gd',f.gd);
+  }
   $('#labName').textContent=f.name;
   $('#labDesc').textContent=f.desc;
   $('#labKcal').textContent=f.kcal;
@@ -642,21 +646,38 @@ function conReintentos(fn,intentos){
   return intento(1);
 }
 function askDulcita(q,typingEl){
-  var ctrl=new AbortController(),timeout=setTimeout(function(){ctrl.abort()},30000);
+  /* Cada motor tiene su propio reloj. Antes un unico temporizador de 30 s
+     bloqueaba toda la cadena: si NVIDIA se ponia lento, el usuario esperaba
+     30 s antes de que el chat pruebe con el siguiente. Ahora el principal
+     rinde en 9 s y se pasa al de respaldo. */
+  var timeout=setTimeout(function(){},1);clearTimeout(timeout);
   var msgs=[{role:'system',content:DULCITA_SYS}]
     .concat(dlxHist.slice(-10))
     .concat([{role:'user',content:q}]);
-  /* Motores en orden: NVIDIA de principal, Pollinations de segunda. */
+  /* Motores en orden: NVIDIA de principal, Pollinations de segunda.
+     nv: segundos maxima de espera de ese motor. */
   var motores=[];
-  if(NV_PROXY)motores.push({n:'NVIDIA · '+NV_MODEL,fn:function(){return postIA(NV_PROXY+'/chat',NV_MODEL,msgs,600,ctrl)}});
-  motores.push({n:AI_MODEL,fn:function(){return postIA(AI_URL,AI_MODEL,msgs,280,ctrl)}});
-  motores.push({n:AI_MODEL_ALT,fn:function(){return postIA(AI_URL,AI_MODEL_ALT,msgs,250,ctrl)}});
+  if(NV_PROXY)motores.push({n:'NVIDIA · '+NV_MODEL,nv:9,fn:function(){
+    var c=new AbortController(),t=setTimeout(function(){c.abort()},9000);
+    return postIA(NV_PROXY+'/chat',NV_MODEL,msgs,600,c).then(function(r){clearTimeout(t);return r},
+      function(e){clearTimeout(t);throw e});
+  }});
+  motores.push({n:AI_MODEL,nv:11,fn:function(){
+    var c=new AbortController(),t=setTimeout(function(){c.abort()},11000);
+    return postIA(AI_URL,AI_MODEL,msgs,280,c).then(function(r){clearTimeout(t);return r},
+      function(e){clearTimeout(t);throw e});
+  }});
+  motores.push({n:AI_MODEL_ALT,nv:9,fn:function(){
+    var c=new AbortController(),t=setTimeout(function(){c.abort()},9000);
+    return postIA(AI_URL,AI_MODEL_ALT,msgs,250,c).then(function(r){clearTimeout(t);return r},
+      function(e){clearTimeout(t);throw e});
+  }});
   function probar(i){
     if(i>=motores.length())return Promise.reject(new Error('sin motores'));
     return conReintentos(motores[i].fn,2).then(function(t){return {t:t,n:motores[i].n}});
   }
   function responde(r){
-    clearTimeout(timeout);typingEl.remove();
+    typingEl.remove();
     dlxHist.push({role:'user',content:q},{role:'assistant',content:r.t});
     bubble('bot',renderBotText(r.t));
     dlxBusy=false;
@@ -664,7 +685,7 @@ function askDulcita(q,typingEl){
   var cadena=Promise.resolve();
   motores.forEach(function(m,i){cadena=cadena.then(function(){return probar(i)})});
   cadena.then(responde).catch(function(){
-    clearTimeout(timeout);typingEl.remove();dlxBusy=false;
+    typingEl.remove();dlxBusy=false;
     /* Modo local de respaldo si falla la red/API */
     var t=matchTopic(q);
     if(t)bubble('bot',pickAnswer(t));
