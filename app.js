@@ -12,7 +12,7 @@ var GB='imagenes/hero-gomitas.jpg';
 /* ================= DATOS ================= */
 var FLAVORS=[
  {name:'Fresa Andina',color:'#ff4d88',desc:'Fresa real con toque de pitahaya, rica en vitamina C.',kcal:42,extra:'Vit C',img:'imagenes/fresa-andina.jpg',wa:'Fresa%20Andina',gd:'#7a1233'},
- {name:'Mango Jengibre',color:'#ffb020',desc:'Mango maduro con jengibre fresco. Energía digestiva para la tarde.',kcal:45,extra:'Energía',img:'imagenes/mango-jengibre.jpg',wa:'Mango%20Jengibre',gd:'#7a4a00'},
+ {name:'Mango Jengibre',color:'#ffb020',desc:'Mango maduro con jengibre fresco. Energía digestiva para la tarde.',kcal:45,extra:'Energía',img:'imagenes/mango-jin-gere.jpg',wa:'Mango%20Jengibre',gd:'#7a4a00'},
  {name:'Arándano Nocturno',color:'#7c5cff',desc:'Antioxidantes + colágeno hidrolizado. Ideal después del deporte.',kcal:40,extra:'Colágeno',img:'imagenes/arandano-nocturno.jpg',wa:'Ar%C3%A1ndano%20Nocturno',gd:'#2a1466'},
  {name:'Limón Menta',color:'#38d9a9',desc:'Cítrico helado con menta y electrolitos. Refresca sin cafeína.',kcal:38,extra:'Frescura',img:'imagenes/limon-menta.jpg',wa:'Lim%C3%B3n%20Menta',gd:'#0a3f30'}
 ];
