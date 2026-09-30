@@ -502,7 +502,7 @@ function fold(s){
 var TOPICS=[
   {k:['envio','enviar','entrega','llega','delivery','gratis'], a:'Envío <b>gratis</b> en Pachacútec, Mi Perú y Ventanilla. Lima/Callao: S/8 en 24-48 h.', c:[['Ver tienda','tienda']]},
   {k:['precio','precia','cuesta','vale','tarifa','costo'], a:'Un pouch de <b>30 gomitas cuesta S/12</b>. Pack Familiar: 3× S/33, Escolar: 5× S/50.', c:[['Ver packs','tienda']]},
-  {k:['sabor','sabores','fresa','mango','arandano','limon'], a:'Fresa Andina, Mango Jengibre, Arándano Nocturno y Limón Menta. <b>100% veganos</b>.', c:[['Ver sabores','sabores']]},
+  {k:['sabor','sabores','fresa','mango','arandano','limon'], a:'Fresa Andina, Mango Jengibre, Arándano Nocturno y Limón Menta. <b>Fresa, Mango y Limón Menta son veganos</b>; el Arándano lleva colágeno.', c:[['Ver sabores','sabores']]},
   {k:['vegano','vegana','pectina','gelatina','animal'], a:'<b>Pectina de cítricos</b>, sin gelatina animal. Solo Arándano tiene colágeno.', c:[['Ver sabores','sabores']]},
   {k:['caloria','calorias','nutricion'], a:'Van de <b>38-45 kcal</b> por pouch. Sabor vegano = pectina natural.', c:[['Ver nutrición','nutricion']]},
   {k:['pedir','comprar','orden','carrito','cómo pedir'], a:'En <b>3 pasos</b>: eliges, agregas y pides por WhatsApp.', c:[['Ver tienda','tienda']]},
@@ -562,10 +562,11 @@ function pickAnswer(t){
 }
 
 /* ============ DULCITA IA ============
-   Motor: Pollinations.ai (gratis, permite CORS desde el navegador).
-   La key NVIDIA del catálogo responde en ~700 ms pero NO permite llamadas
-   CORS desde un navegador (falta access-control-allow-headers en el
-   preflight). Se dejaron las constantes para enchufar un proxy si se usa.
+   Orden de los motores: NVIDIA (principal) y Pollinations (segunda opción).
+   NVIDIA gpt-oss-20b no se puede llamar directo desde el navegador: exige la
+   cabecera Authorization y su preflight de CORS no se aprueba. Por eso se
+   antepone si hay un proxy propio (worker-nvidia.js) en NV_PROXY; si no, el
+   mismo modelo se pide por el transporte de Pollinations.
    El prompt base solo lleva: quién es, tono y CONTEXTO del producto.
    No lleva respuestas predefinidas: las genera la IA.
    Si la red falla, cae al modo local (TOPICS) sin que el usuario lo note. */
@@ -585,7 +586,7 @@ var DULCITA_SYS=
 'Hablas en primera persona, con calidez peruana, fresca, juvenil y cortés. Respuestas CORTAS: 1 a 3 frases, con a lo más un emoji.\n\n'+
 'CONTEXTO DEL PRODUCTO (todo lo que conoces):\n'+
 '- Gomitas con fruta real, pectina de cítricos (sin gelatina animal) y 0% azúcar añadida; dulzor de stevia y eritritol.\n'+
-'- 4 sabores: Fresa Andina, Mango Jengibre, Arándano Nocturno (único con colágeno, no vegano) y Limón Menta. Los 3 primeros son 100% veganos.\n'+
+'- 4 sabores: Fresa Andina, Mango Jengibre, Arándano Nocturno (único con colágeno, no vegano) y Limón Menta. Los veganos son Fresa, Mango y Limón Menta.\n'+
 '- Pouch de 30 gomitas: S/12. Pack Familiar: 3 pouches S/33 (ahorro S/3). Pack Escolar: 5 pouches S/50 (ahorro S/10).\n'+
 '- Pouch surtido: el cliente elige cuántas gomitas por sabor hasta 30, en la sección Tienda.\n'+
 '- Envío GRATIS en Pachacútec, Mi Perú y Ventanilla Centro (mismo día, punto de encuentro). Lima y Callao: S/8, 24-48 h.\n'+
