@@ -571,13 +571,12 @@ function pickAnswer(t){
    No lleva respuestas predefinidas: las genera la IA.
    Si la red falla, cae al modo local (TOPICS) sin que el usuario lo note. */
 var AI_URL='https://text.pollinations.ai/openai';
-/* Modelo principal: gpt-oss-20b, el de NVIDIA. Se pide por el transporte de
-   Pollinations porque el navegador no puede llamar a NVIDIA directo (CORS).
-   Para que la respuesta venga de la NVIDIA de verdad, pega la dirección de tu
-   Worker en NV_PROXY y se antepondrá. */
+/* Modelo principal: gpt-oss-20b, el de NVIDIA. Llega por el Worker de
+   Cloudflare, porque el navegador no puede llamar a NVIDIA directo (CORS).
+   Si el Worker se cae, el mismo modelo se pide por Pollinations. */
 var AI_MODEL='gpt-oss-20b';
 var AI_MODEL_ALT='openai-fast';   /* segunda opción, más rápida */
-var NV_PROXY='';                  /* https://lo-que-sea.workers.dev  */
+var NV_PROXY='https://gomi-ai.gomi-worker.workers.dev';   /* puente a NVIDIA */
 var dlxHist=[];     // historial de la conversación
 var dlxBusy=false;  // evita dobles envíos
 
